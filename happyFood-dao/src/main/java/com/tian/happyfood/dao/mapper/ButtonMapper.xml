@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tian.happyfood.dao.mapper.ButtonMapper">
+    <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Button">
+        <id column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+        <result column="LEVEL" property="level" jdbcType="INTEGER"/>
+        <result column="ORDERS" property="orders"/>
+        <result column="PARENT_ID" property="parentId"/>
+        <result column="USE_STATUS" property="useStatus"/>
+        <result column="STATUS" property="status" jdbcType="INTEGER"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, NAME, TYPE, LEVEL,ORDERS, PARENT_ID, USE_STATUS, STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+    <select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from button
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+    delete from button
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.tian.happyfood.dao.entity.Button" useGeneratedKeys="true" keyProperty="id">
+        insert into button
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="level != null">
+                LEVEL,
+            </if>
+            <if test="orders != null">
+                ORDERS,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="useStatus != null">
+                USE_STATUS,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="orders != null">
+                #{orders,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="useStatus != null">
+                #{useStatus,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.tian.happyfood.dao.entity.Button">
+        update button
+        <set>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="useStatus != null">
+                USE_STATUS = #{useStatus,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryByRole" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from button
+        <where>
+            <if test="level != null">
+                LEVEL = level
+            </if>
+            <if test="useStatus != null">
+                USE_STATUS = useStatus
+            </if>
+            <if test="status != null">
+                STATUS = status
+            </if>
+            <if test="name != null and name != ''">
+                NAME = name
+            </if>
+        </where>
+        order by ORDERS asc
+    </select>
+
+    <select id="queryByParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from button
+        where PARENT_ID = parentId
+        <if test="useStatus != null">
+            and USE_STATUS = useStatus
+        </if>
+        <if test="status != null">
+            and STATUS = status
+        </if>
+    </select>
+</mapper>
