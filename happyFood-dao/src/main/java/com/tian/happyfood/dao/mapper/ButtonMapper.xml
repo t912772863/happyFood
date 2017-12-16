@@ -129,16 +129,16 @@
         from button
         <where>
             <if test="level != null">
-                LEVEL = level
+                and LEVEL = #{level}
             </if>
             <if test="useStatus != null">
-                USE_STATUS = useStatus
+               and USE_STATUS = #{useStatus}
             </if>
             <if test="status != null">
-                STATUS = status
+               and STATUS = #{status}
             </if>
             <if test="name != null and name != ''">
-                NAME = name
+                and NAME = #{name}
             </if>
         </where>
         order by ORDERS asc
@@ -148,12 +148,12 @@
         select
         <include refid="Base_Column_List"/>
         from button
-        where PARENT_ID = parentId
+        where PARENT_ID = #{parentId}
         <if test="useStatus != null">
-            and USE_STATUS = useStatus
+            and USE_STATUS = #{useStatus}
         </if>
         <if test="status != null">
-            and STATUS = status
+            and STATUS = #{status}
         </if>
     </select>
 </mapper>

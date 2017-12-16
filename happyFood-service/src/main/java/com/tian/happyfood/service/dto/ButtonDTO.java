@@ -1,12 +1,13 @@
-package com.tian.happyfood.dao.dto;
+package com.tian.happyfood.service.dto;
 
 import java.util.Date;
 import java.util.List;
 
 /**
+ * DTO 
  * Created by Administrator on 2017/12/14 0014.
  */
-public class ButtonDto {
+public class ButtonDTO {
     private Long id;
 
     private String name;
@@ -29,7 +30,7 @@ public class ButtonDto {
     /**
      * 子级按钮
      */
-    private List<ButtonDto> sub_button;
+    private List<ButtonDTO> sub_button;
 
     public Long getId() {
         return id;
@@ -111,11 +112,11 @@ public class ButtonDto {
         this.updateTime = updateTime;
     }
 
-    public List<ButtonDto> getSub_button() {
+    public List<ButtonDTO> getSub_button() {
         return sub_button;
     }
 
-    public void setSub_button(List<ButtonDto> sub_button) {
+    public void setSub_button(List<ButtonDTO> sub_button) {
         this.sub_button = sub_button;
     }
 

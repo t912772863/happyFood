@@ -1,8 +1,10 @@
 package com.tian.happyfood.service;
 
-import com.tian.happyfood.dao.dto.ButtonDto;
+import com.tian.common.other.BusinessException;
 import com.tian.happyfood.dao.entity.Button;
 import com.tian.happyfood.dao.mapper.ButtonMapper;
+import com.tian.happyfood.service.dto.ButtonDTO;
+import com.tian.happyfood.service.wechatutil.WechatButtonUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,32 +54,49 @@ public class ButtonServiceImpl implements IButtonService {
         return buttonMapper.queryByParentId(parentId, useStatus, status);
     }
 
-    public List<ButtonDto> queryButtonOfWX() {
+    public List<ButtonDTO> queryButtonOfWX() {
         // 先查询出没有父id的按钮, 再递归查询出子按钮
-        List<Button> oneButtonList = buttonMapper.queryByRole(null, 1, 1, null);
-        List<ButtonDto> dtoList = convertButtonList(oneButtonList);
+        List<Button> oneButtonList = buttonMapper.queryByRole(1, 1, 1, null);
+        List<ButtonDTO> dtoList = convertButtonList(oneButtonList);
         queryButtonRecurrence(dtoList);
         return dtoList;
     }
 
-    private void queryButtonRecurrence(List<ButtonDto> buttonDtoList ){
-        for (ButtonDto b:buttonDtoList) {
+    private void queryButtonRecurrence(List<ButtonDTO> buttonDtoList ){
+        if(buttonDtoList == null || buttonDtoList.size() == 0){
+            return;
+        }
+        for (ButtonDTO b:buttonDtoList) {
             // 最多有三级菜单,就不再递归了
             if(b.getLevel() == 3){
                 break;
             }
             List<Button> subButtonList = buttonMapper.queryByParentId(b.getId(),1,1);
-            List<ButtonDto> subDtoList = convertButtonList(subButtonList);
+            List<ButtonDTO> subDtoList = convertButtonList(subButtonList);
             b.setSub_button(subDtoList);
             queryButtonRecurrence(subDtoList);
         }
     }
 
+    public void uploadButtonOfWX() throws Exception {
+        List<ButtonDTO> buttonDTOList = queryButtonOfWX();
+        boolean index = WechatButtonUtils.uploadButtons(buttonDTOList);
+        if(!index){
+            throw new BusinessException(500, "同步微信按钮失败");
+        }
+    }
 
-    private static List<ButtonDto> convertButtonList(List<Button> buttonList) {
-        List<ButtonDto> buttonDtoList = new ArrayList<ButtonDto>();
+    public void deleteButtonOfWX() {
+
+    }
+
+    private static List<ButtonDTO> convertButtonList(List<Button> buttonList) {
+        if(buttonList == null || buttonList.size() ==0){
+            return null;
+        }
+        List<ButtonDTO> buttonDtoList = new ArrayList<ButtonDTO>();
         for (Button b : buttonList) {
-            ButtonDto dto = new ButtonDto();
+            ButtonDTO dto = new ButtonDTO();
             BeanUtils.copyProperties(b, dto);
             buttonDtoList.add(dto);
         }

@@ -1,7 +1,7 @@
 package com.tian.happyfood.service;
 
-import com.tian.happyfood.dao.dto.ButtonDto;
 import com.tian.happyfood.dao.entity.Button;
+import com.tian.happyfood.service.dto.ButtonDTO;
 
 import java.util.List;
 
@@ -27,7 +27,17 @@ public interface IButtonService {
      */
     List<Button> queryButtonByLeval(Integer level, Integer useStatus, Integer status, String name);
 
-    List<ButtonDto> queryButtonOfWX();
+    List<ButtonDTO> queryButtonOfWX();
 
     List<Button> queryButtonByParentId(Long parentId, Integer useStatus, Integer status);
+
+    /**
+     * 删除微信公众号上现有的所有按钮
+     */
+    void deleteButtonOfWX();
+
+    /**
+     * 上传微信按钮
+     */
+    void uploadButtonOfWX() throws Exception;
 }

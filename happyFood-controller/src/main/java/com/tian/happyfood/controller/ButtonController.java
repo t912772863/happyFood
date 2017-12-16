@@ -29,12 +29,24 @@ public class ButtonController extends BaseController{
     }
 
     /**
-     * 把一个本地的按钮设置到微信上
-     * @param id
+     * 把本地的按钮设置到微信上
      * @return
      */
-    public ResponseData uploadButtonToWX(Long id){
+    @RequestMapping("uploadButtonToWX")
+    @ResponseBody
+    public ResponseData uploadButtonToWX() throws Exception {
+        buttonService.uploadButtonOfWX();
         return success;
+    }
+
+    /**
+     * 删除微信上的按钮
+     * @return
+     */
+    @RequestMapping("deleteButtonWX")
+    @ResponseBody
+    public ResponseData deleteButtonWX(){
+        return null;
     }
 
 }
