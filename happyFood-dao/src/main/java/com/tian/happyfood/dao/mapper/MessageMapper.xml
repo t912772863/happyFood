@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tian.happyfood.dao.mapper.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Message" >
+    <result column="TO_USER_NAME" property="toUserName" jdbcType="VARCHAR" />
+    <result column="FROM_USER_NAME" property="fromUserName" jdbcType="VARCHAR" />
+    <result column="MSG_CREATE_TIME" property="msgCreateTime" jdbcType="TIMESTAMP" />
+    <result column="MSG_TYPE" property="msgType" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="MSG_ID" property="msgId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.tian.happyfood.dao.entity.Message" >
+    insert into message (TO_USER_NAME, FROM_USER_NAME, MSG_CREATE_TIME, 
+      MSG_TYPE, CONTENT, MSG_ID, 
+      CREATE_TIME, UPDATE_TIME, STATUS
+      )
+    values (#{toUserName,jdbcType=VARCHAR}, #{fromUserName,jdbcType=VARCHAR}, #{msgCreateTime,jdbcType=TIMESTAMP}, 
+      #{msgType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{msgId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="toUserName != null" >
+        TO_USER_NAME,
+      </if>
+      <if test="fromUserName != null" >
+        FROM_USER_NAME,
+      </if>
+      <if test="msgCreateTime != null" >
+        MSG_CREATE_TIME,
+      </if>
+      <if test="msgType != null" >
+        MSG_TYPE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="msgId != null" >
+        MSG_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="toUserName != null" >
+        #{toUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUserName != null" >
+        #{fromUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="msgCreateTime != null" >
+        #{msgCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null" >
+        #{msgId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
