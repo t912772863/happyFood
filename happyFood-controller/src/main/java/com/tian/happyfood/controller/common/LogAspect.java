@@ -150,7 +150,7 @@ public class LogAspect {
 //        logger.info("====> result : "+result.toString());
 //        return result;
 //    }
-    @AfterReturning(returning = "result", value = "execution(* com.tian.springmvcmybatis.controller..*.*(..))")
+    @AfterReturning(returning = "result", value = "execution(* com.tian.happyfood.controller..*.*(..))")
     public void after(Object result) throws Throwable {
         logger.info("====> result : " + (result == null ? "null" : result.toString()));
     }

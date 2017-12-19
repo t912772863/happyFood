@@ -39,6 +39,7 @@ public class MessageController extends BaseController {
     @ResponseBody
     public String get(String signature, String timestamp, String nonce,
                       String echostr, HttpServletRequest request) throws IOException {
+        request.setCharacterEncoding("utf-8");
         boolean isGet = request.getMethod().toLowerCase().equals("get");
         if (isGet) {
             String[] str = { "happyfood2017", timestamp, nonce };
