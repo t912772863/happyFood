@@ -2,10 +2,15 @@ package com.tian.happyfood.controller;
 
 import com.tian.common.other.ResponseData;
 import com.tian.common.util.SHA1Utils;
+import com.tian.happyfood.dao.entity.Event;
 import com.tian.happyfood.dao.entity.Message;
+import com.tian.happyfood.service.IEventService;
 import com.tian.happyfood.service.IMessageService;
 import com.tian.happyfood.service.ITestService;
 import com.tian.happyfood.service.wechatutil.WechatMessageUtils;
+import com.tian.happyfood.service.wechatutil.bean.WXRequestData;
+import com.tian.happyfood.service.wechatutil.bean.event.SupperEvent;
+import com.tian.happyfood.service.wechatutil.bean.message.SupperMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -28,6 +32,8 @@ public class MessageController extends BaseController {
     private ITestService testService;
     @Autowired
     private IMessageService messageService;
+    @Autowired
+    private IEventService eventService;
 
     @RequestMapping("queryTestById")
     @ResponseBody
@@ -38,7 +44,7 @@ public class MessageController extends BaseController {
     @RequestMapping("get")
     @ResponseBody
     public String get(String signature, String timestamp, String nonce,
-                      String echostr, HttpServletRequest request) throws IOException {
+                      String echostr, HttpServletRequest request) throws Exception {
         request.setCharacterEncoding("utf-8");
         boolean isGet = request.getMethod().toLowerCase().equals("get");
         if (isGet) {
@@ -62,14 +68,22 @@ public class MessageController extends BaseController {
         }
         String reqStr = stringBuffer.toString();
         logger.info("请求的参数: " + reqStr);
-        Message message = WechatMessageUtils.parseXML(reqStr);
-        messageService.insert(message);
+        WXRequestData messageDTO = WechatMessageUtils.parseXML2(reqStr);
+        if(messageDTO instanceof SupperMessage){
+            Message message = new Message();
+            WechatMessageUtils.convertMessage((SupperMessage) messageDTO, message);
+            messageService.insert(message);
+        }else if(messageDTO instanceof SupperEvent){
+            Event event= new Event();
+            WechatMessageUtils.convertEvent((SupperEvent)messageDTO, event);
+            eventService.insert(event);
+        }
+
         return "";
     }
 
     public static void main(String[] args) {
-        String s = "aaa";
-        String result = SHA1Utils.getSha1(s);
-        System.out.println(result);
+        String s = "ykR2sFsqsrycxbyJBAo3ujBoYpWfY5TZCTtFUelCZum6e5jh_U4obuN2r5mbnScJ";
+        System.out.println(s.length());
     }
 }

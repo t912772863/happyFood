@@ -1,86 +1,180 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tian.happyfood.dao.mapper.MessageMapper" >
-  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Message" >
-    <result column="TO_USER_NAME" property="toUserName" jdbcType="VARCHAR" />
-    <result column="FROM_USER_NAME" property="fromUserName" jdbcType="VARCHAR" />
-    <result column="MSG_CREATE_TIME" property="msgCreateTime" jdbcType="TIMESTAMP" />
-    <result column="MSG_TYPE" property="msgType" jdbcType="VARCHAR" />
-    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
-    <result column="MSG_ID" property="msgId" jdbcType="BIGINT" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="STATUS" property="status" jdbcType="INTEGER" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tian.happyfood.dao.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Message">
+    <result column="TO_USER_NAME" jdbcType="VARCHAR" property="toUserName" />
+    <result column="FROM_USER_NAME" jdbcType="VARCHAR" property="fromUserName" />
+    <result column="MSG_CREATE_TIME" jdbcType="TIMESTAMP" property="msgCreateTime" />
+    <result column="MSG_TYPE" jdbcType="VARCHAR" property="msgType" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+    <result column="PIC_URL" jdbcType="VARCHAR" property="picUrl" />
+    <result column="MEDIA_ID" jdbcType="VARCHAR" property="mediaId" />
+    <result column="FORMAT" jdbcType="VARCHAR" property="format" />
+    <result column="RECOGNITION" jdbcType="VARCHAR" property="recognition" />
+    <result column="THUMB_MEDIA_ID" jdbcType="VARCHAR" property="thumbMediaId" />
+    <result column="LOCATION_X" jdbcType="VARCHAR" property="locationX" />
+    <result column="LOCATION_Y" jdbcType="VARCHAR" property="locationY" />
+    <result column="SCALE" jdbcType="INTEGER" property="scale" />
+    <result column="LABEL" jdbcType="VARCHAR" property="label" />
+    <result column="TITILE" jdbcType="VARCHAR" property="titile" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="MSG_ID" jdbcType="BIGINT" property="msgId" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
   </resultMap>
-  <insert id="insert" parameterType="com.tian.happyfood.dao.entity.Message" >
+  <insert id="insert" parameterType="com.tian.happyfood.dao.entity.Message">
     insert into message (TO_USER_NAME, FROM_USER_NAME, MSG_CREATE_TIME, 
-      MSG_TYPE, CONTENT, MSG_ID, 
+      MSG_TYPE, CONTENT, PIC_URL, 
+      MEDIA_ID, FORMAT, RECOGNITION, 
+      THUMB_MEDIA_ID, LOCATION_X, LOCATION_Y, 
+      SCALE, LABEL, TITILE, 
+      DESCRIPTION, URL, MSG_ID, 
       CREATE_TIME, UPDATE_TIME, STATUS
       )
     values (#{toUserName,jdbcType=VARCHAR}, #{fromUserName,jdbcType=VARCHAR}, #{msgCreateTime,jdbcType=TIMESTAMP}, 
-      #{msgType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{msgId,jdbcType=BIGINT}, 
+      #{msgType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
+      #{mediaId,jdbcType=VARCHAR}, #{format,jdbcType=VARCHAR}, #{recognition,jdbcType=VARCHAR}, 
+      #{thumbMediaId,jdbcType=VARCHAR}, #{locationX,jdbcType=VARCHAR}, #{locationY,jdbcType=VARCHAR}, 
+      #{scale,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{titile,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{msgId,jdbcType=BIGINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Message" >
+  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Message">
     insert into message
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="toUserName != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="toUserName != null">
         TO_USER_NAME,
       </if>
-      <if test="fromUserName != null" >
+      <if test="fromUserName != null">
         FROM_USER_NAME,
       </if>
-      <if test="msgCreateTime != null" >
+      <if test="msgCreateTime != null">
         MSG_CREATE_TIME,
       </if>
-      <if test="msgType != null" >
+      <if test="msgType != null">
         MSG_TYPE,
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         CONTENT,
       </if>
-      <if test="msgId != null" >
+      <if test="picUrl != null">
+        PIC_URL,
+      </if>
+      <if test="mediaId != null">
+        MEDIA_ID,
+      </if>
+      <if test="format != null">
+        FORMAT,
+      </if>
+      <if test="recognition != null">
+        RECOGNITION,
+      </if>
+      <if test="thumbMediaId != null">
+        THUMB_MEDIA_ID,
+      </if>
+      <if test="locationX != null">
+        LOCATION_X,
+      </if>
+      <if test="locationY != null">
+        LOCATION_Y,
+      </if>
+      <if test="scale != null">
+        SCALE,
+      </if>
+      <if test="label != null">
+        LABEL,
+      </if>
+      <if test="titile != null">
+        TITILE,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="msgId != null">
         MSG_ID,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         CREATE_TIME,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         UPDATE_TIME,
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         STATUS,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="toUserName != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="toUserName != null">
         #{toUserName,jdbcType=VARCHAR},
       </if>
-      <if test="fromUserName != null" >
+      <if test="fromUserName != null">
         #{fromUserName,jdbcType=VARCHAR},
       </if>
-      <if test="msgCreateTime != null" >
+      <if test="msgCreateTime != null">
         #{msgCreateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="msgType != null" >
+      <if test="msgType != null">
         #{msgType,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="msgId != null" >
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null">
+        #{mediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null">
+        #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="recognition != null">
+        #{recognition,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbMediaId != null">
+        #{thumbMediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="locationX != null">
+        #{locationX,jdbcType=VARCHAR},
+      </if>
+      <if test="locationY != null">
+        #{locationY,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null">
+        #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="titile != null">
+        #{titile,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null">
         #{msgId,jdbcType=BIGINT},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
+
+
 </mapper>

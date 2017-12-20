@@ -1,9 +1,9 @@
-package com.tian.happyfood.service.dto;
+package com.tian.happyfood.service.wechatutil.bean;
 
 /**
- * Created by Administrator on 2017/12/19 0019.
+ * Created by Administrator on 2017/12/20 0020.
  */
-public class MessageDTO {
+public class WXRequestData {
     private String ToUserName;
 
     private String FromUserName;
@@ -11,10 +11,6 @@ public class MessageDTO {
     private String CreateTime;
 
     private String MsgType;
-
-    private String Content;
-
-    private String MsgId;
 
     public String getToUserName() {
         return ToUserName;
@@ -48,31 +44,13 @@ public class MessageDTO {
         MsgType = msgType;
     }
 
-    public String getContent() {
-        return Content;
-    }
-
-    public void setContent(String content) {
-        Content = content;
-    }
-
-    public String getMsgId() {
-        return MsgId;
-    }
-
-    public void setMsgId(String msgId) {
-        MsgId = msgId;
-    }
-
     @Override
     public String toString() {
-        return "MessageDTO{" +
+        return "WXRequestData{" +
                 "ToUserName='" + ToUserName + '\'' +
                 ", FromUserName='" + FromUserName + '\'' +
                 ", CreateTime='" + CreateTime + '\'' +
                 ", MsgType='" + MsgType + '\'' +
-                ", Content='" + Content + '\'' +
-                ", MsgId='" + MsgId + '\'' +
                 '}';
     }
 }
