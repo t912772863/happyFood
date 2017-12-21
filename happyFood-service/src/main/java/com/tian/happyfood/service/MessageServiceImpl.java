@@ -21,6 +21,9 @@ public class MessageServiceImpl implements IMessageService {
         messageMapper.insert(message);
     }
 
-    public void insertSelective(Message record) {
+    public void insertSelective(Message message) {
+        message.setCreateTime(new Date());
+        message.setStatus(1);
+        messageMapper.insertSelective(message);
     }
 }

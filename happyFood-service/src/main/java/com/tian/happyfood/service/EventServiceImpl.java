@@ -14,6 +14,6 @@ public class EventServiceImpl implements IEventService {
     private EventMapper eventMapper;
 
     public void insert(Event event) {
-        eventMapper.insert(event);
+        eventMapper.insertSelective(event);
     }
 }

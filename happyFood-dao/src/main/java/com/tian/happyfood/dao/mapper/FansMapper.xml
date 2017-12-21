@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tian.happyfood.dao.mapper.FansMapper">
+  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Fans">
+    <result column="OPEN_ID" jdbcType="VARCHAR" property="openId" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
+    <result column="SEX" jdbcType="INTEGER" property="sex" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="COUNTRY" jdbcType="VARCHAR" property="country" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+    <result column="LANGUAGE" jdbcType="VARCHAR" property="language" />
+    <result column="HEAD_IMG_URL" jdbcType="VARCHAR" property="headImgUrl" />
+    <result column="SUBSCRIBE_TIME" jdbcType="TIMESTAMP" property="subscribeTime" />
+    <result column="UNION_ID" jdbcType="VARCHAR" property="unionId" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="GROUP_ID" jdbcType="INTEGER" property="groupId" />
+    <result column="TAG_ID_LIST" jdbcType="VARCHAR" property="tagIdList" />
+    <result column="SUBSCRIBE_STATUS" jdbcType="INTEGER" property="subscribeStatus" />
+  </resultMap>
+  <insert id="insert" parameterType="com.tian.happyfood.dao.entity.Fans">
+    insert into fans (OPEN_ID, NICKNAME, SEX, 
+      CITY, COUNTRY, PROVINCE, 
+      LANGUAGE, HEAD_IMG_URL, SUBSCRIBE_TIME, 
+      UNION_ID, REMARK, GROUP_ID, 
+      TAG_ID_LIST, SUBSCRIBE_STATUS)
+    values (#{openId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{language,jdbcType=VARCHAR}, #{headImgUrl,jdbcType=VARCHAR}, #{subscribeTime,jdbcType=TIMESTAMP}, 
+      #{unionId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, 
+      #{tagIdList,jdbcType=VARCHAR}, #{subscribeStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Fans">
+    insert into fans
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        OPEN_ID,
+      </if>
+      <if test="nickname != null">
+        NICKNAME,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="country != null">
+        COUNTRY,
+      </if>
+      <if test="province != null">
+        PROVINCE,
+      </if>
+      <if test="language != null">
+        LANGUAGE,
+      </if>
+      <if test="headImgUrl != null">
+        HEAD_IMG_URL,
+      </if>
+      <if test="subscribeTime != null">
+        SUBSCRIBE_TIME,
+      </if>
+      <if test="unionId != null">
+        UNION_ID,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="groupId != null">
+        GROUP_ID,
+      </if>
+      <if test="tagIdList != null">
+        TAG_ID_LIST,
+      </if>
+      <if test="subscribeStatus != null">
+        SUBSCRIBE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeTime != null">
+        #{subscribeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unionId != null">
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="tagIdList != null">
+        #{tagIdList,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeStatus != null">
+        #{subscribeStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

@@ -15,64 +15,11 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/12/19 0019.
  */
-public class WechatMessageUtils {
-    private static Logger logger = LoggerFactory.getLogger(WechatMessageUtils.class);
+public class WXMessageUtils extends WXUtils{
+    private static Logger logger = LoggerFactory.getLogger(WXMessageUtils.class);
 
-    public static Message parseXML3(String xmlStr){
-        // 先判断收到的消息的类型, 再转成对应的实体
-        String msgType = XmlUtils.getNodeValue(xmlStr, "MsgType");
-        SupperMessage messageDTO = null;
-        Message message = new Message();
-        try {
-            if("text".equals(msgType)){
-                messageDTO = new TextMessage();
-                XmlUtils.paserXmlToObject(xmlStr, messageDTO);
-                message.setContent(((TextMessage)messageDTO).getContent());
-            }else if("image".equals(msgType)){
-                messageDTO = new ImageMessage();
-                XmlUtils.paserXmlToObject(xmlStr, messageDTO);
-                message.setMediaId(((ImageMessage)messageDTO).getMediaId());
-                message.setPicUrl(((ImageMessage)messageDTO).getPicUrl());
-            }else if("voice".equals(msgType)){
-                messageDTO = new VoiceMessage();
-                XmlUtils.paserXmlToObject(xmlStr, messageDTO);
-                message.setMediaId(((VoiceMessage)messageDTO).getMediaId());
-                message.setFormat(((VoiceMessage)messageDTO).getFormat());
-            }else if("video".equals(msgType) || "shortvideo".equals(msgType)){
-                messageDTO = new VideoMessage();
-                XmlUtils.paserXmlToObject(xmlStr, messageDTO);
-                message.setMediaId(((VideoMessage)messageDTO).getMediaId());
-                message.setThumbMediaId(((VideoMessage)messageDTO).getThumbMediaId());
-            }else if("location".equals(msgType)){
-                messageDTO = new LocationMessage();
-                XmlUtils.paserXmlToObject(xmlStr, messageDTO);
-                message.setLocationX(((LocationMessage)messageDTO).getLocation_X());
-                message.setLocationY(((LocationMessage)messageDTO).getLocation_Y());
-                message.setScale(Integer.parseInt(((LocationMessage)messageDTO).getScale()));
-                message.setLabel(((LocationMessage)messageDTO).getLabel());
-            }else if("link".equals(msgType)){
-                messageDTO = new LinkMessage();
-                XmlUtils.paserXmlToObject(xmlStr, messageDTO);
-                message.setTitile(((LinkMessage)messageDTO).getTitle());
-                message.setDescription(((LinkMessage)messageDTO).getDescription());
-                message.setUrl(((LinkMessage)messageDTO).getUrl());
-            }else {
-                throw new BusinessException(500, "未知类型的消息");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("解析收到的消息异常", e);
-        }
-        // 不同类型的共有属性,统一赋值
-        message.setFromUserName(messageDTO.getFromUserName());
-        message.setToUserName(messageDTO.getToUserName());
-        message.setMsgId(Long.parseLong(messageDTO.getMsgId()));
-        message.setMsgCreateTime(new Date(Long.parseLong(messageDTO.getCreateTime())));
-        message.setMsgType(messageDTO.getMsgType());
-        return message;
-    }
 
-    public static WXRequestData parseXML2(String xmlStr) throws Exception {
+    public static WXRequestData parseXML(String xmlStr) throws Exception {
         // 先判断收到的消息的类型, 再转成对应的实体
         String msgType = XmlUtils.getNodeValue(xmlStr, "MsgType");
 
@@ -121,6 +68,7 @@ public class WechatMessageUtils {
         message.setToUserName(supperMessage.getToUserName());
         message.setMsgType(supperMessage.getMsgType());
         message.setMsgId(Long.parseLong(supperMessage.getMsgId()));
+        message.setMsgCreateTime(new Date(Long.parseLong(supperMessage.getCreateTime())));
 
         if(supperMessage instanceof TextMessage){
             message.setContent(((TextMessage) supperMessage).getContent());
@@ -160,6 +108,8 @@ public class WechatMessageUtils {
         event.setToUserName(supperEvent.getToUserName());
         event.setMsgType(supperEvent.getMsgType());
         event.setEvent(supperEvent.getEvent());
+        event.setMsgCreateTime(new Date(Long.parseLong(supperEvent.getCreateTime())));
+
         if(supperEvent instanceof SubscribeEvent){
             event.setEventKey(((SubscribeEvent) supperEvent).getEventKey());
             event.setTicket(((SubscribeEvent) supperEvent).getTicket());

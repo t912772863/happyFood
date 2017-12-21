@@ -1,93 +1,94 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tian.happyfood.dao.mapper.EventMapper" >
-  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Event" >
-    <result column="TO_USER_NAME" property="toUserName" jdbcType="VARCHAR" />
-    <result column="FROM_USER_NAME" property="fromUserName" jdbcType="VARCHAR" />
-    <result column="MESSAGE_CREATE_TIME" property="messageCreateTime" jdbcType="TIMESTAMP" />
-    <result column="MSG_TYPE" property="msgType" jdbcType="VARCHAR" />
-    <result column="EVENT" property="event" jdbcType="VARCHAR" />
-    <result column="EVENT_KEY" property="eventKey" jdbcType="VARCHAR" />
-    <result column="TICKET" property="ticket" jdbcType="VARCHAR" />
-    <result column="LATITUDE" property="latitude" jdbcType="VARCHAR" />
-    <result column="LONGITUDE" property="longitude" jdbcType="VARCHAR" />
-    <result column="PRECISION" property="precision" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tian.happyfood.dao.mapper.EventMapper">
+  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Event">
+    <result column="TO_USER_NAME" jdbcType="VARCHAR" property="toUserName" />
+    <result column="FROM_USER_NAME" jdbcType="VARCHAR" property="fromUserName" />
+    <result column="MSG_CREATE_TIME" jdbcType="TIMESTAMP" property="msgCreateTime" />
+    <result column="MSG_TYPE" jdbcType="VARCHAR" property="msgType" />
+    <result column="EVENT" jdbcType="VARCHAR" property="event" />
+    <result column="EVENT_KEY" jdbcType="VARCHAR" property="eventKey" />
+    <result column="TICKET" jdbcType="VARCHAR" property="ticket" />
+    <result column="LATITUDE" jdbcType="VARCHAR" property="latitude" />
+    <result column="LONGITUDE" jdbcType="VARCHAR" property="longitude" />
+    <result column="PRECISION" jdbcType="VARCHAR" property="precision" />
   </resultMap>
-  <insert id="insert" parameterType="com.tian.happyfood.dao.entity.Event" >
-    insert into event (TO_USER_NAME, FROM_USER_NAME, MESSAGE_CREATE_TIME, 
-      MSG_TYPE, EVENT, EVENT_KEY, 
-      TICKET, LATITUDE, LONGITUDE, 
+  <insert id="insert" parameterType="com.tian.happyfood.dao.entity.Event">
+    insert into event (TO_USER_NAME, FROM_USER_NAME, MSG_CREATE_TIME,
+      MSG_TYPE, EVENT, EVENT_KEY,
+      TICKET, LATITUDE, LONGITUDE,
       PRECISION)
-    values (#{toUserName,jdbcType=VARCHAR}, #{fromUserName,jdbcType=VARCHAR}, #{messageCreateTime,jdbcType=TIMESTAMP}, 
-      #{msgType,jdbcType=VARCHAR}, #{event,jdbcType=VARCHAR}, #{eventKey,jdbcType=VARCHAR}, 
-      #{ticket,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
+    values (#{toUserName,jdbcType=VARCHAR}, #{fromUserName,jdbcType=VARCHAR}, #{msgCreateTime,jdbcType=TIMESTAMP},
+      #{msgType,jdbcType=VARCHAR}, #{event,jdbcType=VARCHAR}, #{eventKey,jdbcType=VARCHAR},
+      #{ticket,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR},
       #{precision,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Event" >
+  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Event">
     insert into event
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="toUserName != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="toUserName != null">
         TO_USER_NAME,
       </if>
-      <if test="fromUserName != null" >
+      <if test="fromUserName != null">
         FROM_USER_NAME,
       </if>
-      <if test="messageCreateTime != null" >
-        MESSAGE_CREATE_TIME,
+      <if test="msgCreateTime != null">
+        MSG_CREATE_TIME,
       </if>
-      <if test="msgType != null" >
+      <if test="msgType != null">
         MSG_TYPE,
       </if>
-      <if test="event != null" >
+      <if test="event != null">
         EVENT,
       </if>
-      <if test="eventKey != null" >
+      <if test="eventKey != null">
         EVENT_KEY,
       </if>
-      <if test="ticket != null" >
+      <if test="ticket != null">
         TICKET,
       </if>
-      <if test="latitude != null" >
+      <if test="latitude != null">
         LATITUDE,
       </if>
-      <if test="longitude != null" >
+      <if test="longitude != null">
         LONGITUDE,
       </if>
-      <if test="precision != null" >
+      <if test="precision != null">
         PRECISION,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="toUserName != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="toUserName != null">
         #{toUserName,jdbcType=VARCHAR},
       </if>
-      <if test="fromUserName != null" >
+      <if test="fromUserName != null">
         #{fromUserName,jdbcType=VARCHAR},
       </if>
-      <if test="messageCreateTime != null" >
-        #{messageCreateTime,jdbcType=TIMESTAMP},
+      <if test="msgCreateTime != null">
+        #{msgCreateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="msgType != null" >
+      <if test="msgType != null">
         #{msgType,jdbcType=VARCHAR},
       </if>
-      <if test="event != null" >
+      <if test="event != null">
         #{event,jdbcType=VARCHAR},
       </if>
-      <if test="eventKey != null" >
+      <if test="eventKey != null">
         #{eventKey,jdbcType=VARCHAR},
       </if>
-      <if test="ticket != null" >
+      <if test="ticket != null">
         #{ticket,jdbcType=VARCHAR},
       </if>
-      <if test="latitude != null" >
+      <if test="latitude != null">
         #{latitude,jdbcType=VARCHAR},
       </if>
-      <if test="longitude != null" >
+      <if test="longitude != null">
         #{longitude,jdbcType=VARCHAR},
       </if>
-      <if test="precision != null" >
+      <if test="precision != null">
         #{precision,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
+
 </mapper>

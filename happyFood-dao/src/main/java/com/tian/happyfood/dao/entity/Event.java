@@ -7,7 +7,7 @@ public class Event {
 
     private String fromUserName;
 
-    private Date messageCreateTime;
+    private Date msgCreateTime;
 
     private String msgType;
 
@@ -39,12 +39,12 @@ public class Event {
         this.fromUserName = fromUserName == null ? null : fromUserName.trim();
     }
 
-    public Date getMessageCreateTime() {
-        return messageCreateTime;
+    public Date getMsgCreateTime() {
+        return msgCreateTime;
     }
 
-    public void setMessageCreateTime(Date messageCreateTime) {
-        this.messageCreateTime = messageCreateTime;
+    public void setMsgCreateTime(Date msgCreateTime) {
+        this.msgCreateTime = msgCreateTime;
     }
 
     public String getMsgType() {

@@ -8,31 +8,18 @@ import com.tian.happyfood.service.dto.ButtonDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/15 0015.
  */
-public class WechatButtonUtils {
+public class WXButtonUtils extends WXUtils{
     /**
      * 日志工具
      */
-    private static Logger logger = LoggerFactory.getLogger(WechatButtonUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(WXButtonUtils.class);
 
-    /**
-     * 微信APPID
-     */
-    private static final String APPID_WX = "wxb9a14a469bc18d05";
-    /**
-     * 微信APPSECRT
-     */
-    private static final String APPSECRT_WX = "d3feb528bf36ca852b25ddd984a72d0e";
 
-    /**
-     * 获取access_token的接口地址
-     */
-    private static final String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
     /**
      * 上传按钮菜单的接口地址
      */
@@ -83,19 +70,5 @@ public class WechatButtonUtils {
         }
     }
 
-    /**
-     * 获取微信的access_token
-     * @return
-     */
-    private static String getWXAccessToken(){
-        try {
-            String result = HttpUtils.doGet(GET_ACCESS_TOKEN_URL+"&appid="+APPID_WX+"&secret="+APPSECRT_WX);
-            JSONObject jsonObject = JSON.parseObject(result);
-            String accessToken = jsonObject.getString("access_token");
-            return accessToken;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }
