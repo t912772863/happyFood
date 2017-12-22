@@ -3,6 +3,8 @@ package com.tian.happyfood.service.wechatutil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tian.common.util.HttpUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -10,6 +12,7 @@ import java.io.IOException;
  * Created by Administrator on 2017/12/21 0021.
  */
 public abstract class WXUtils {
+    private static final Logger logger = LoggerFactory.getLogger(WXUtils.class);
     /**
      * 微信APPID
      */
@@ -31,11 +34,18 @@ public abstract class WXUtils {
     protected static String getWXAccessToken(){
         try {
             String result = HttpUtils.doGet(GET_ACCESS_TOKEN_URL+"&appid="+APPID_WX+"&secret="+APPSECRT_WX);
+            logger.info("获取微信access_token返回: result = "+result);
             JSONObject jsonObject = JSON.parseObject(result);
+            Integer errcode = jsonObject.getInteger("errcode");
+            if(errcode != null && errcode != 0){
+                logger.error("获取微信access_token异常");
+                return null;
+            }
+
             String accessToken = jsonObject.getString("access_token");
             return accessToken;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("获取微信access_token异常: ",e);
         }
         return null;
     }

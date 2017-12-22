@@ -39,7 +39,10 @@ public class WXButtonUtils extends WXUtils{
         String result = HttpUtils.doPostOfJson(UPLOAD_BUTTONS_URL+accessToken, buttonStr);
         logger.info("调用微信上传按钮接口返回: "+result);
         JSONObject jsonObject = JSON.parseObject(result);
-        int errcode = jsonObject.getIntValue("errcode");
+        Integer errcode = jsonObject.getInteger("errcode");
+        if(errcode != null && errcode != 0){
+            logger.error("获取微信access_token异常");
+        }
         return errcode == 0;
     }
 
