@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by Administrator on 2017/12/14 0014.
  */
@@ -34,7 +36,9 @@ public class ButtonController extends BaseController{
      */
     @RequestMapping("uploadButtonToWX")
     @ResponseBody
-    public ResponseData uploadButtonToWX() throws Exception {
+    public ResponseData uploadButtonToWX(HttpServletRequest request) throws Exception {
+        System.out.println(request.getHeader("x-forwarded-for"));
+        System.out.println(request.getRemoteAddr());
         buttonService.uploadButtonOfWX();
         return success;
     }

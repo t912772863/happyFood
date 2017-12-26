@@ -3,6 +3,7 @@ package com.tian.happyfood.dao.entity;
 import java.util.Date;
 
 public class Fans {
+    //  SUBSCRIBESTATUS
     private String openId;
 
     private String nickname;

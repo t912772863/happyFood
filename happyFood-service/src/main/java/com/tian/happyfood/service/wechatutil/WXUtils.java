@@ -3,6 +3,7 @@ package com.tian.happyfood.service.wechatutil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tian.common.util.HttpUtils;
+import com.tian.common.util.JedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,10 @@ public abstract class WXUtils {
      * @return
      */
     protected static String getWXAccessToken(){
+        String wxAccessToken = JedisUtil.get("wxAccessToken");
+        if(wxAccessToken != null && !"".equals(wxAccessToken)){
+            return wxAccessToken;
+        }
         try {
             String result = HttpUtils.doGet(GET_ACCESS_TOKEN_URL+"&appid="+APPID_WX+"&secret="+APPSECRT_WX);
             logger.info("获取微信access_token返回: result = "+result);
@@ -43,6 +48,8 @@ public abstract class WXUtils {
             }
 
             String accessToken = jsonObject.getString("access_token");
+            // 把最新获取到的accss_token加入到缓存中, 官网有效时间为90s, 这里设为80s, 防止临界值问题
+            JedisUtil.set("wxAccessToken", accessToken, 80);
             return accessToken;
         } catch (IOException e) {
             logger.error("获取微信access_token异常: ",e);

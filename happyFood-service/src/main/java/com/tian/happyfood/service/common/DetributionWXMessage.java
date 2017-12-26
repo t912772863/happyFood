@@ -1,5 +1,6 @@
-package com.tian.happyfood.controller;
+package com.tian.happyfood.service.common;
 
+import com.tian.common.util.ActivemqUtils;
 import com.tian.common.util.XmlUtils;
 import com.tian.happyfood.dao.entity.Event;
 import com.tian.happyfood.dao.entity.Fans;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.jms.JMSException;
 import java.util.Date;
 
 /**
@@ -35,7 +37,12 @@ public class DetributionWXMessage {
     @Autowired
     private IFansService fansService;
 
-    public String executeWXMessage(WXRequestData requestData){
+    private ActivemqUtils.Producer producer= ActivemqUtils.getQueueProducerInstance("tian");
+
+    public DetributionWXMessage() throws JMSException {
+    }
+
+    public String executeWXMessage(WXRequestData requestData) throws JMSException {
         String result = null;
         if(requestData instanceof SupperMessage){
             result = executeMessage((SupperMessage)requestData);
@@ -53,7 +60,7 @@ public class DetributionWXMessage {
         return "";
     }
 
-    private String executeEvent(SupperEvent supperEvent){
+    private String executeEvent(SupperEvent supperEvent) throws JMSException {
         Event event= new Event();
         WXMessageUtils.convertEvent(supperEvent, event);
         eventService.insert(event);
@@ -61,6 +68,7 @@ public class DetributionWXMessage {
         if("subscribe".equals(event.getEvent())){
             // 把新关注用户的信息入库
             WXUser wxUser = WXUserUtils.getUserBuOpenId(event.getFromUserName());
+            producer.sendText(event.getFromUserName());
             if(wxUser != null){
                 Fans fans = convertToFans(wxUser);
                 fansService.insertSelective(fans);

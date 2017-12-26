@@ -16,7 +16,7 @@
     <result column="LOCATION_Y" jdbcType="VARCHAR" property="locationY" />
     <result column="SCALE" jdbcType="INTEGER" property="scale" />
     <result column="LABEL" jdbcType="VARCHAR" property="label" />
-    <result column="TITILE" jdbcType="VARCHAR" property="titile" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
     <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
     <result column="URL" jdbcType="VARCHAR" property="url" />
     <result column="MSG_ID" jdbcType="BIGINT" property="msgId" />
@@ -29,7 +29,7 @@
       MSG_TYPE, CONTENT, PIC_URL, 
       MEDIA_ID, FORMAT, RECOGNITION, 
       THUMB_MEDIA_ID, LOCATION_X, LOCATION_Y, 
-      SCALE, LABEL, TITILE, 
+      SCALE, LABEL, TITLE,
       DESCRIPTION, URL, MSG_ID, 
       CREATE_TIME, UPDATE_TIME, STATUS
       )
@@ -37,7 +37,7 @@
       #{msgType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
       #{mediaId,jdbcType=VARCHAR}, #{format,jdbcType=VARCHAR}, #{recognition,jdbcType=VARCHAR}, 
       #{thumbMediaId,jdbcType=VARCHAR}, #{locationX,jdbcType=VARCHAR}, #{locationY,jdbcType=VARCHAR}, 
-      #{scale,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{titile,jdbcType=VARCHAR}, 
+      #{scale,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
       #{description,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{msgId,jdbcType=BIGINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
@@ -87,8 +87,8 @@
       <if test="label != null">
         LABEL,
       </if>
-      <if test="titile != null">
-        TITILE,
+      <if test="title != null">
+        TITLE,
       </if>
       <if test="description != null">
         DESCRIPTION,
@@ -152,8 +152,8 @@
       <if test="label != null">
         #{label,jdbcType=VARCHAR},
       </if>
-      <if test="titile != null">
-        #{titile,jdbcType=VARCHAR},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},

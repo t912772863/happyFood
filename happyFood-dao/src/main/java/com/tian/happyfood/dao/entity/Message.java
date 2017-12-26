@@ -3,6 +3,7 @@ package com.tian.happyfood.dao.entity;
 import java.util.Date;
 
 public class Message {
+    // LOCATIONX
     private String toUserName;
 
     private String fromUserName;
@@ -31,7 +32,7 @@ public class Message {
 
     private String label;
 
-    private String titile;
+    private String title;
 
     private String description;
 
@@ -44,7 +45,7 @@ public class Message {
     private Date updateTime;
 
     private Integer status;
-
+//   URL
     public String getToUserName() {
         return toUserName;
     }
@@ -158,11 +159,11 @@ public class Message {
     }
 
     public String getTitile() {
-        return titile;
+        return title;
     }
 
     public void setTitile(String titile) {
-        this.titile = titile == null ? null : titile.trim();
+        this.title = titile == null ? null : titile.trim();
     }
 
     public String getDescription() {

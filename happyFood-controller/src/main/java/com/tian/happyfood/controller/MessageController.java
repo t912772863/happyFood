@@ -3,6 +3,7 @@ package com.tian.happyfood.controller;
 import com.tian.common.other.ResponseData;
 import com.tian.common.util.SHA1Utils;
 import com.tian.happyfood.service.ITestService;
+import com.tian.happyfood.service.common.DetributionWXMessage;
 import com.tian.happyfood.service.wechatutil.WXMessageUtils;
 import com.tian.happyfood.service.wechatutil.bean.WXRequestData;
 import org.slf4j.Logger;

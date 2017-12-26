@@ -3,6 +3,7 @@ package com.tian.happyfood.dao.entity;
 import java.util.Date;
 
 public class Event {
+    //    PRECISION
     private String toUserName;
 
     private String fromUserName;
