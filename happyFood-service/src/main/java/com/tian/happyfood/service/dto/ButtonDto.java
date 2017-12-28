@@ -7,7 +7,7 @@ import java.util.List;
  * DTO 
  * Created by Administrator on 2017/12/14 0014.
  */
-public class ButtonDTO {
+public class ButtonDto {
     private Long id;
 
     private String name;
@@ -30,7 +30,7 @@ public class ButtonDTO {
     /**
      * 子级按钮
      */
-    private List<ButtonDTO> sub_button;
+    private List<ButtonDto> sub_button;
 
     public Long getId() {
         return id;
@@ -112,11 +112,11 @@ public class ButtonDTO {
         this.updateTime = updateTime;
     }
 
-    public List<ButtonDTO> getSub_button() {
+    public List<ButtonDto> getSub_button() {
         return sub_button;
     }
 
-    public void setSub_button(List<ButtonDTO> sub_button) {
+    public void setSub_button(List<ButtonDto> sub_button) {
         this.sub_button = sub_button;
     }
 

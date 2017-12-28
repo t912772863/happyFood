@@ -2,12 +2,15 @@ package com.tian.happyfood.service.common;
 
 import com.tian.common.util.ActivemqUtils;
 import com.tian.common.util.XmlUtils;
+import com.tian.happyfood.dao.entity.DishProcedure;
 import com.tian.happyfood.dao.entity.Event;
 import com.tian.happyfood.dao.entity.Fans;
 import com.tian.happyfood.dao.entity.Message;
+import com.tian.happyfood.service.IDishService;
 import com.tian.happyfood.service.IEventService;
 import com.tian.happyfood.service.IFansService;
 import com.tian.happyfood.service.IMessageService;
+import com.tian.happyfood.service.dto.DishDto;
 import com.tian.happyfood.service.wechatutil.WXMessageUtils;
 import com.tian.happyfood.service.wechatutil.WXUserUtils;
 import com.tian.happyfood.service.wechatutil.bean.WXRequestData;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 分类处理微信推送过来的消息
@@ -36,6 +40,8 @@ public class DetributionWXMessage {
     private IEventService eventService;
     @Autowired
     private IFansService fansService;
+    @Autowired
+    private IDishService dishService;
 
     private static ActivemqUtils.Producer producer;
 
@@ -43,7 +49,7 @@ public class DetributionWXMessage {
         producer =  ActivemqUtils.getQueueProducerInstance(Config.config.getString("activemq_username"),
                 Config.config.getString("activemq_password"),
                 Config.config.getString("activemq_url"),
-                Config.config.getString("activemq_destination"));
+                Config.config.getString("activemq_destination_fan"));
     }
 
     public String executeWXMessage(WXRequestData requestData) throws JMSException {
@@ -60,7 +66,28 @@ public class DetributionWXMessage {
         Message message = new Message();
         WXMessageUtils.convertMessage(supperMessage, message);
         messageService.insert(message);
-        // 所有类型消息先不回复
+        // 如果是文本消息, 则查找菜品做法,其它类型消息先不回复
+        if("text".equals(supperMessage.getMsgType())){
+            String result = "";
+            try{
+                DishDto dishDto = dishService.queryDetailByDishName(message.getContent());
+                String dishContent = executeDishDto(dishDto);
+
+                // 回复一个菜品
+                TextResponse textResponse = new TextResponse();
+                textResponse.setFromUserName(supperMessage.getToUserName());
+                textResponse.setToUserName(supperMessage.getFromUserName());
+                textResponse.setMsgType("text");
+                textResponse.setCreateTime(System.currentTimeMillis()+"");
+                textResponse.setContent(dishContent);
+
+                result = XmlUtils.buildXml(textResponse, false, "xml");
+            }catch (Exception e){
+                e.printStackTrace();
+                logger.error("创建回复消息失败", e);
+            }
+            return result;
+        }
         return "";
     }
 
@@ -121,5 +148,23 @@ public class DetributionWXMessage {
         return fans;
     }
 
+    /**
+     * 把查询出来的菜品详情. 转换成微信模版消息
+     * @param dishDto
+     * @return
+     */
+    private static String executeDishDto(DishDto dishDto){
+        if(dishDto == null){
+            return "不好意思呢, 暂时找不到你要的菜品, 要不, 您待会儿再过来看看  *_*||";
+        }
+        StringBuilder stringBuilder = new StringBuilder(dishDto.getName()+"做法如下: ");
+        List<DishProcedure> procedureList = dishDto.getProcedures();
+        int i = 1;
+        for (DishProcedure d:procedureList) {
+            stringBuilder.append("</br>"+i+". "+d.getContent());
+            i++;
+        }
+        return stringBuilder.toString();
+    }
 
 }

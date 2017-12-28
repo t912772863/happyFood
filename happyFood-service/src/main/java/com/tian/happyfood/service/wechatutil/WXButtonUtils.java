@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tian.common.other.BusinessException;
 import com.tian.common.util.HttpUtils;
-import com.tian.happyfood.service.dto.ButtonDTO;
+import com.tian.happyfood.service.dto.ButtonDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class WXButtonUtils extends WXUtils{
     private static final String UPLOAD_BUTTONS_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
     private static final String QUERY_BUTTONS_RUL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=";
 
-    public static boolean uploadButtons(List<ButtonDTO> buttonDTOList) throws Exception {
+    public static boolean uploadButtons(List<ButtonDto> buttonDTOList) throws Exception {
         filterFiled(buttonDTOList);
         String buttonStr = JSONObject.toJSONString(buttonDTOList);
         // TODO: 2017/12/15 0015 这里的字符串还要处理成对应的格式
@@ -54,11 +54,11 @@ public class WXButtonUtils extends WXUtils{
      * 过滤字段
      * @param buttonDTOList
      */
-    private static void filterFiled (List<ButtonDTO> buttonDTOList){
+    private static void filterFiled (List<ButtonDto> buttonDTOList){
         if(buttonDTOList == null || buttonDTOList.size() == 0){
             return;
         }
-        for (ButtonDTO b:buttonDTOList) {
+        for (ButtonDto b:buttonDTOList) {
             b.setId(null);
             b.setCreateTime(null);
             b.setLevel(null);

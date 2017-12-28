@@ -2,6 +2,7 @@ package com.tian.happyfood.service.common;
 
 import com.tian.common.util.ActivemqUtils;
 import com.tian.common.util.JedisUtil;
+import com.tian.happyfood.service.DishServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,10 +37,16 @@ public class DataInit {
         ActivemqUtils.getQueueConsumerInstance(Config.config.getString("activemq_username"),
                 Config.config.getString("activemq_password"),
                 Config.config.getString("activemq_url"),
-                Config.config.getString("activemq_destination"), new NewFansListener());
+                Config.config.getString("activemq_destination_fan"), new NewFansListener());
+        ActivemqUtils.getQueueConsumerInstance(Config.config.getString("activemq_username"),
+                Config.config.getString("activemq_password"),
+                Config.config.getString("activemq_url"),
+                Config.config.getString("activemq_destination_dish"), new JDDishListener());
+
 
         // 初始化生产者
         DetributionWXMessage.init();
+        DishServiceImpl.init();
 
     }
 }

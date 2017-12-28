@@ -1,7 +1,7 @@
 package com.tian.happyfood.service;
 
 import com.tian.happyfood.dao.entity.Button;
-import com.tian.happyfood.service.dto.ButtonDTO;
+import com.tian.happyfood.service.dto.ButtonDto;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public interface IButtonService {
      */
     List<Button> queryButtonByLeval(Integer level, Integer useStatus, Integer status, String name);
 
-    List<ButtonDTO> queryButtonOfWX();
+    List<ButtonDto> queryButtonOfWX();
 
     List<Button> queryButtonByParentId(Long parentId, Integer useStatus, Integer status);
 

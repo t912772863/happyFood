@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tian.happyfood.dao.mapper.DishMaterialMapper" >
+  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.DishMaterial" >
+    <result column="DISH_ID" property="dishId" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.DishMaterial" >
+    insert into dish_material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dishId != null" >
+        DISH_ID,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dishId != null" >
+        #{dishId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="queryByDishId" resultMap="BaseResultMap">
+     select * from dish_material where DISH_ID = #{dishId}
+  </select>
+</mapper>

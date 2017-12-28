@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tian.happyfood.dao.mapper.DishMapper" >
+  <resultMap id="BaseResultMap" type="com.tian.happyfood.dao.entity.Dish" >
+    <result column="CLASS_ID" property="classId" jdbcType="VARCHAR" />
+    <result column="PREPARE_TIME" property="prepareTime" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PIC" property="pic" jdbcType="VARCHAR" />
+    <result column="TAG" property="tag" jdbcType="VARCHAR" />
+    <result column="PEOPLE_NUM" property="peopleNum" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="COOKING_TIME" property="cookingTime" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Dish" >
+    insert into dish
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        CLASS_ID,
+      </if>
+      <if test="prepareTime != null" >
+        PREPARE_TIME,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="pic != null" >
+        PIC,
+      </if>
+      <if test="tag != null" >
+        TAG,
+      </if>
+      <if test="peopleNum != null" >
+        PEOPLE_NUM,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="cookingTime != null" >
+        COOKING_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="prepareTime != null" >
+        #{prepareTime,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleNum != null" >
+        #{peopleNum,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="cookingTime != null" >
+        #{cookingTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="queryById" resultMap="BaseResultMap">
+     select * from dish where ID = #{id}
+  </select>
+
+  <select id="queryByName" resultMap="BaseResultMap">
+     select * from dish where NAME = #{name}
+  </select>
+</mapper>

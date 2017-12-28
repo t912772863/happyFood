@@ -4,7 +4,7 @@ import com.tian.common.util.ActivemqUtils;
 import com.tian.happyfood.dao.entity.Button;
 import com.tian.happyfood.dao.mapper.ButtonMapper;
 import com.tian.happyfood.service.common.Config;
-import com.tian.happyfood.service.dto.ButtonDTO;
+import com.tian.happyfood.service.dto.ButtonDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,25 +54,25 @@ public class ButtonServiceImpl implements IButtonService {
         return buttonMapper.queryByParentId(parentId, useStatus, status);
     }
 
-    public List<ButtonDTO> queryButtonOfWX() {
+    public List<ButtonDto> queryButtonOfWX() {
         // 先查询出没有父id的按钮, 再递归查询出子按钮
         List<Button> oneButtonList = buttonMapper.queryByRole(1, 1, 1, null);
-        List<ButtonDTO> dtoList = convertButtonList(oneButtonList);
+        List<ButtonDto> dtoList = convertButtonList(oneButtonList);
         queryButtonRecurrence(dtoList);
         return dtoList;
     }
 
-    private void queryButtonRecurrence(List<ButtonDTO> buttonDtoList ){
+    private void queryButtonRecurrence(List<ButtonDto> buttonDtoList ){
         if(buttonDtoList == null || buttonDtoList.size() == 0){
             return;
         }
-        for (ButtonDTO b:buttonDtoList) {
+        for (ButtonDto b:buttonDtoList) {
             // 最多有三级菜单,就不再递归了
             if(b.getLevel() == 3){
                 break;
             }
             List<Button> subButtonList = buttonMapper.queryByParentId(b.getId(),1,1);
-            List<ButtonDTO> subDtoList = convertButtonList(subButtonList);
+            List<ButtonDto> subDtoList = convertButtonList(subButtonList);
             b.setSub_button(subDtoList);
             queryButtonRecurrence(subDtoList);
         }
@@ -96,13 +96,13 @@ public class ButtonServiceImpl implements IButtonService {
 
     }
 
-    private static List<ButtonDTO> convertButtonList(List<Button> buttonList) {
+    private static List<ButtonDto> convertButtonList(List<Button> buttonList) {
         if(buttonList == null || buttonList.size() ==0){
             return null;
         }
-        List<ButtonDTO> buttonDtoList = new ArrayList<ButtonDTO>();
+        List<ButtonDto> buttonDtoList = new ArrayList<ButtonDto>();
         for (Button b : buttonList) {
-            ButtonDTO dto = new ButtonDTO();
+            ButtonDto dto = new ButtonDto();
             BeanUtils.copyProperties(b, dto);
             buttonDtoList.add(dto);
         }
