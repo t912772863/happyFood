@@ -3,6 +3,8 @@ package com.tian.happyfood.controller.common;
 import com.alibaba.fastjson.JSONObject;
 import com.tian.common.other.BusinessException;
 import com.tian.common.other.ResponseData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Administrator on 2016/11/22 0022.
  */
 public class DefaultExceptionHandler implements HandlerExceptionResolver{
+    private static final Logger logger = LoggerFactory.getLogger(DefaultExceptionHandler.class);
+
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
         ModelAndView mv = new ModelAndView();
         //  使用response返回
@@ -26,7 +30,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver{
 
 
         try{
-            e.printStackTrace();
+            logger.error("全局异常", e);
             if(e instanceof BusinessException){
                 BusinessException be = (BusinessException)e;
                 // 如果是我们返回的业务异常则进行封装

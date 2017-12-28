@@ -37,9 +37,13 @@ public class DetributionWXMessage {
     @Autowired
     private IFansService fansService;
 
-    private ActivemqUtils.Producer producer= ActivemqUtils.getQueueProducerInstance("tian");
+    private static ActivemqUtils.Producer producer;
 
-    public DetributionWXMessage() throws JMSException {
+    public static void init() throws JMSException{
+        producer =  ActivemqUtils.getQueueProducerInstance(Config.config.getString("activemq_username"),
+                Config.config.getString("activemq_password"),
+                Config.config.getString("activemq_url"),
+                Config.config.getString("activemq_destination"));
     }
 
     public String executeWXMessage(WXRequestData requestData) throws JMSException {

@@ -26,10 +26,20 @@ public class DataInit {
     @PostConstruct
     public void init() throws JMSException {
         logger.info("====================> spring bean init over, data init start...");
+        // 把配置文件初始化到Config中
+        Config.init();
+
         // 初始化redis工具类
         JedisUtil.init(redisIp, redisPort);
-        ActivemqUtils.getQueueConsumerInstance("tian", new NewFansListener());
 
+        // 初始化mq的消费者
+        ActivemqUtils.getQueueConsumerInstance(Config.config.getString("activemq_username"),
+                Config.config.getString("activemq_password"),
+                Config.config.getString("activemq_url"),
+                Config.config.getString("activemq_destination"), new NewFansListener());
+
+        // 初始化生产者
+        DetributionWXMessage.init();
 
     }
 }

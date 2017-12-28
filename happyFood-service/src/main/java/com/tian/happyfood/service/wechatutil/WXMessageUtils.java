@@ -68,7 +68,7 @@ public class WXMessageUtils extends WXUtils{
         message.setToUserName(supperMessage.getToUserName());
         message.setMsgType(supperMessage.getMsgType());
         message.setMsgId(Long.parseLong(supperMessage.getMsgId()));
-        message.setMsgCreateTime(new Date(Long.parseLong(supperMessage.getCreateTime())));
+        message.setMsgCreateTime(new Date(Long.parseLong(supperMessage.getCreateTime()+"000")));
 
         if(supperMessage instanceof TextMessage){
             message.setContent(((TextMessage) supperMessage).getContent());
@@ -80,6 +80,7 @@ public class WXMessageUtils extends WXUtils{
         if(supperMessage instanceof VoiceMessage){
             message.setMediaId(((VoiceMessage) supperMessage).getMediaId());
             message.setFormat(((VoiceMessage) supperMessage).getFormat());
+            message.setDescription(((VoiceMessage)supperMessage).getRecognition());
         }
         if(supperMessage instanceof VideoMessage){
             message.setMediaId(((VideoMessage) supperMessage).getMediaId());
@@ -108,7 +109,7 @@ public class WXMessageUtils extends WXUtils{
         event.setToUserName(supperEvent.getToUserName());
         event.setMsgType(supperEvent.getMsgType());
         event.setEvent(supperEvent.getEvent());
-        event.setMsgCreateTime(new Date(Long.parseLong(supperEvent.getCreateTime())));
+        event.setMsgCreateTime(new Date(Long.parseLong(supperEvent.getCreateTime()+"000")));
 
         if(supperEvent instanceof SubscribeEvent){
             event.setEventKey(((SubscribeEvent) supperEvent).getEventKey());
@@ -128,4 +129,16 @@ public class WXMessageUtils extends WXUtils{
 
     }
 
+    public static void main(String[] args) {
+        String s = "<xml><ToUserName><![CDATA[gh_707fb02e775a]]></ToUserName><FromUserName><![CDATA[oq6PS1ZViOqjZNk1vQ74LqltDsg4]]></FromUserName><CreateTime>1514356471</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[wc1cxdf23HMDagGcFSEG5Lz_Sq_54XgrEP3EUfzpTXzueExaTKRBimbpJjeGs190]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>6504111517430972416</MsgId><Recognition><![CDATA[你在干嘛呢？]]></Recognition></xml>";
+        VideoMessage v = new VideoMessage();
+        try {
+            XmlUtils.paserXmlToObject(s, v);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        System.out.println(v);
+        // 1514358778  1514358836126
+        System.out.println(System.currentTimeMillis());
+    }
 }

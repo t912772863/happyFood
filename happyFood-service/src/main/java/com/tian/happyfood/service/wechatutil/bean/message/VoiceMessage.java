@@ -6,6 +6,7 @@ package com.tian.happyfood.service.wechatutil.bean.message;
 public class VoiceMessage extends SupperMessage {
     private String MediaId;
     private String Format;
+    private String Recognition;
 
     public String getMediaId() {
         return MediaId;
@@ -23,11 +24,20 @@ public class VoiceMessage extends SupperMessage {
         Format = format;
     }
 
+    public String getRecognition() {
+        return Recognition;
+    }
+
+    public void setRecognition(String recognition) {
+        Recognition = recognition;
+    }
+
     @Override
     public String toString() {
         return "VoiceMessage{" +
                 "MediaId='" + MediaId + '\'' +
                 ", Format='" + Format + '\'' +
+                ", Recognition='" + Recognition + '\'' +
                 '}';
     }
 }

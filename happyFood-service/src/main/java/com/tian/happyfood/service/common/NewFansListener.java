@@ -18,6 +18,8 @@ public class NewFansListener implements MessageListener {
         try {
             String s = ((TextMessage)message).getText();
             logger.info("收到消息: "+ s);
+            // 消息确认
+            message.acknowledge();
         } catch (JMSException e) {
             logger.error("收到消息异常",e);
         }

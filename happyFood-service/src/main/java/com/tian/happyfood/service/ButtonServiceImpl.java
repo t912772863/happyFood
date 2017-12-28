@@ -3,6 +3,7 @@ package com.tian.happyfood.service;
 import com.tian.common.util.ActivemqUtils;
 import com.tian.happyfood.dao.entity.Button;
 import com.tian.happyfood.dao.mapper.ButtonMapper;
+import com.tian.happyfood.service.common.Config;
 import com.tian.happyfood.service.dto.ButtonDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,10 @@ public class ButtonServiceImpl implements IButtonService {
     }
 
     public void uploadButtonOfWX() throws Exception {
-        ActivemqUtils.Producer producer =ActivemqUtils.getQueueProducerInstance("tian");
+        ActivemqUtils.Producer producer =ActivemqUtils.getQueueProducerInstance(Config.config.getString("activemq_username"),
+                Config.config.getString("activemq_password"),
+                Config.config.getString("activemq_url"),
+                Config.config.getString("activemq_destination"));
         producer.sendText("======================");
 
 //        List<ButtonDTO> buttonDTOList = queryButtonOfWX();
