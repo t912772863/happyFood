@@ -1,7 +1,7 @@
 package com.tian.happyfood.service.common;
 
 import com.tian.common.util.ActivemqUtils;
-import com.tian.common.util.StrSimilarity;
+import com.tian.common.util.StrSimilarityUtils;
 import com.tian.common.util.XmlUtils;
 import com.tian.happyfood.dao.entity.*;
 import com.tian.happyfood.service.IDishService;
@@ -194,7 +194,7 @@ public class DetributionWXMessage {
                 continue;
             }
             logger.info("对比菜名匹配: "+ s +",  "+dishName);
-            double index = StrSimilarity.SimilarDegree(s, dishName);
+            float index = StrSimilarityUtils.getSimilarityRatio(s, dishName);
             if(index >= 0.5){
                 matchName += s+"; ";
                 i++;
