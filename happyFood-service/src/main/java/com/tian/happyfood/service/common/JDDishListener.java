@@ -25,7 +25,7 @@ public class JDDishListener implements MessageListener {
             String s = ((TextMessage)message).getText();
            logger.info("收到消息: "+ s);
             // 根据关键字从京东万象获取数据
-            List<JDDish> jdDishList = JDDishUtils.searchDish(s,3);
+            List<JDDish> jdDishList = JDDishUtils.searchDish(s,20);
             // 把数据入库本地
             WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
             IDishService dishService = wac.getBean(IDishService.class);

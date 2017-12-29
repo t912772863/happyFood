@@ -6,6 +6,7 @@ import com.tian.happyfood.service.jingdongutil.bean.JDDish;
 
 import javax.jms.JMSException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2017/12/28 0028.
@@ -23,5 +24,7 @@ public interface IDishService {
 
     DishDto queryDetailById(String id);
 
-    DishDto queryDetailByDishName(String dishName) throws JMSException;
+    List<DishDto> queryDetailByDishName(String dishName) throws JMSException;
+
+    Set<String> queryDishName();
 }

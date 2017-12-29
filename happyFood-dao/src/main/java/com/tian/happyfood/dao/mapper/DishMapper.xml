@@ -82,4 +82,8 @@
   <select id="queryByName" resultMap="BaseResultMap">
      select * from dish where NAME = #{name}
   </select>
+
+  <select id="queryAllDishName" resultType="string">
+     select NAME from dish;
+  </select>
 </mapper>

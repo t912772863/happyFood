@@ -14,8 +14,8 @@
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://118.126.115.206:3306/happyfood?characterEncoding=UTF-8" userId="root"
-                        password="123456">
+                        connectionURL="jdbc:mysql://localhost:3306/happyfood?characterEncoding=UTF-8" userId="root"
+                        password="06220724">
         </jdbcConnection>
         <javaTypeResolver >
             <property name="forceBigDecimals" value="false" />
@@ -37,8 +37,8 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         <!--表名-->  <!--实体类名-->
-        <table tableName="fans" schema="louis"
-               domainObjectName="Fans" enableCountByExample="false"
+        <table tableName="dish_variety" schema="louis"
+               domainObjectName="DishVariety" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
         </table>

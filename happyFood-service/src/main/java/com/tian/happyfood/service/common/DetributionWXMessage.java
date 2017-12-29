@@ -1,11 +1,9 @@
 package com.tian.happyfood.service.common;
 
 import com.tian.common.util.ActivemqUtils;
+import com.tian.common.util.StrSimilarity;
 import com.tian.common.util.XmlUtils;
-import com.tian.happyfood.dao.entity.DishProcedure;
-import com.tian.happyfood.dao.entity.Event;
-import com.tian.happyfood.dao.entity.Fans;
-import com.tian.happyfood.dao.entity.Message;
+import com.tian.happyfood.dao.entity.*;
 import com.tian.happyfood.service.IDishService;
 import com.tian.happyfood.service.IEventService;
 import com.tian.happyfood.service.IFansService;
@@ -70,8 +68,12 @@ public class DetributionWXMessage {
         if("text".equals(supperMessage.getMsgType())){
             String result = "";
             try{
-                DishDto dishDto = dishService.queryDetailByDishName(message.getContent());
-                String dishContent = executeDishDto(dishDto);
+                List<DishDto> dishDtoList = dishService.queryDetailByDishName(message.getContent());
+                String dishContent = executeDishDto(dishDtoList);
+                // 如果没找到相应的菜品, 则生成提示语
+                if(dishContent == null){
+                    dishContent = getlikeDishName(message.getContent());
+                }
 
                 // 回复一个菜品
                 TextResponse textResponse = new TextResponse();
@@ -112,7 +114,7 @@ public class DetributionWXMessage {
             textResponse.setToUserName(supperEvent.getFromUserName());
             textResponse.setMsgType("text");
             textResponse.setCreateTime(System.currentTimeMillis()+"");
-            textResponse.setContent("亲爱的小主, 我等您很久了^_^");
+            textResponse.setContent("亲爱的小主, 我等您很久了, 想吃点啥呢 ? 告诉我吧! \n^_^");
             String result = "";
             try{
                 result = XmlUtils.buildXml(textResponse, false, "xml");
@@ -150,21 +152,62 @@ public class DetributionWXMessage {
 
     /**
      * 把查询出来的菜品详情. 转换成微信模版消息
-     * @param dishDto
+     * @param dishDtoList
      * @return
      */
-    private static String executeDishDto(DishDto dishDto){
-        if(dishDto == null){
-            return "不好意思呢, 暂时找不到你要的菜品, 要不, 您待会儿再过来看看  *_*||";
+    private static String executeDishDto(List<DishDto> dishDtoList){
+        if(dishDtoList == null || dishDtoList.size()==0){
+            return null;
         }
-        StringBuilder stringBuilder = new StringBuilder(dishDto.getName()+"做法如下: ");
-        List<DishProcedure> procedureList = dishDto.getProcedures();
-        int i = 1;
-        for (DishProcedure d:procedureList) {
-            stringBuilder.append("</br>"+i+". "+d.getContent());
-            i++;
+        StringBuilder stringBuilder = new StringBuilder("");
+        for (DishDto dishDto:dishDtoList) {
+            stringBuilder = stringBuilder.append(dishDto.getName()+": \n\n");
+            stringBuilder.append("用料: \n");
+            for (DishMaterial d:dishDto.getMaterials()) {
+                stringBuilder.append(d.getName()+": "+d.getAmount()+"\n");
+            }
+
+            stringBuilder.append("\n步骤: \n");
+            int i = 1;
+            for (DishProcedure d:dishDto.getProcedures()) {
+                stringBuilder.append(i+". "+d.getContent()+"\n");
+                stringBuilder.append("参考图: "+d.getPic() +"\n");
+                i++;
+            }
+            break;
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * 从菜品名库中,进行匹配度在60%的查找, 最多找三个就不找了.
+     * @param dishName
+     * @return
+     */
+    private static String getlikeDishName(String dishName){
+        String result = "不好意思呢, 暂时找不到您要的菜品, 要不, 您待会儿再过来看看  *_*||";
+
+        String matchName = "";
+        int i = 0;
+        for (String s:SystemCache.dishNameSet) {
+            if(s == null || "".equals(s.trim())){
+                continue;
+            }
+            logger.info("对比菜名匹配: "+ s +",  "+dishName);
+            double index = StrSimilarity.SimilarDegree(s, dishName);
+            if(index >= 0.5){
+                matchName += s+"; ";
+                i++;
+                if( i == 3){
+                    break;
+                }
+            }
+        }
+        // 如果还是没找到相似的菜品名, 则给一条提示语
+        if(!"".equals(matchName)){
+            result +=  "\n\n为您推荐相似菜品: "+matchName;
+        }
+        return result;
     }
 
 }

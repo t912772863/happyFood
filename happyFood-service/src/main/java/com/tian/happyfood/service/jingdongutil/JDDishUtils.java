@@ -51,6 +51,9 @@ public class JDDishUtils {
         String url = JD_SEARCH_DISH + "keyword=" + keyword + "&num=" + num + "&appkey=" + JD_DISH_INTERFACE_APPKEY;
         String result = requestJD(url);
         logger.info("关键词查询菜品返回: " + result);
+        if(result == null){
+            return null;
+        }
         JSONObject jsonObject = JSON.parseObject(result);
         JSONArray jsonArray = jsonObject.getJSONArray("list");
         List<JDDish> jDdishList = JSONArray.parseArray(jsonArray.toJSONString(), JDDish.class);
@@ -65,6 +68,9 @@ public class JDDishUtils {
         String url = JD_RECIPE_CLASS + "appkey=" + JD_DISH_INTERFACE_APPKEY;
         String result = requestJD(url);
         logger.info("查询菜品分类返回: " + result);
+        if(result == null){
+            return null;
+        }
         List<JDDishVariety> jdDishVarietyList = JSONArray.parseArray(result, JDDishVariety.class);
         return jdDishVarietyList;
     }
@@ -80,6 +86,9 @@ public class JDDishUtils {
         String url = JD_BY_CLASS + "classid=" + classId +"&start="+start+ "&num=" + num + "&appkey=" + JD_DISH_INTERFACE_APPKEY;
         String result = requestJD(url);
         logger.info("按分类检索菜品返回: " + result);
+        if(result == null){
+            return null;
+        }
         JSONObject jsonObject = JSON.parseObject(result);
         JSONArray jsonArray = jsonObject.getJSONArray("list");
         List<JDDish> jDdishList = JSONArray.parseArray(jsonArray.toJSONString(), JDDish.class);
@@ -94,6 +103,9 @@ public class JDDishUtils {
     public static JDDish getDetail(String id){
         String url = JD_DETAIL + "id="+id + "&appkey="+JD_DISH_INTERFACE_APPKEY;
         String result = requestJD(url);
+        if(result == null){
+            return null;
+        }
         JDDish jdDish = JSON.parseObject(result, JDDish.class);
         return jdDish;
     }
@@ -112,10 +124,11 @@ public class JDDishUtils {
                 JSONObject jsonObject1 = jsonObject.getJSONObject("result");
                 if ("0".equals(jsonObject1.getString("status"))) {
                     result = jsonObject1.getString("result");
+                    return result;
                 }
             }
         }
-        return result;
+        return null;
     }
 
 
