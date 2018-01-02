@@ -64,15 +64,19 @@ public class DetributionWXMessage {
         Message message = new Message();
         WXMessageUtils.convertMessage(supperMessage, message);
         messageService.insert(message);
-        // 如果是文本消息, 则查找菜品做法,其它类型消息先不回复
-        if("text".equals(supperMessage.getMsgType())){
+        // 如果是文本消息,或者语音, 则查找菜品做法,其它类型消息先不回复
+        if("text".equals(supperMessage.getMsgType()) || "voice".equals(supperMessage.getMsgType())){
+            // 用户发过来的消息
+            String userMsg = "text".equals(supperMessage.getMsgType())?message.getContent():message.getRecognition();
+            // 语音转换的消息会有标点, 这里过滤一下
+            userMsg = userMsg.trim().replace("？","").replace("，","").replace("！","").replace("。","");
             String result = "";
             try{
-                List<DishDto> dishDtoList = dishService.queryDetailByDishName(message.getContent());
+                List<DishDto> dishDtoList = dishService.queryDetailByDishName(userMsg);
                 String dishContent = executeDishDto(dishDtoList);
                 // 如果没找到相应的菜品, 则生成提示语
                 if(dishContent == null){
-                    dishContent = getlikeDishName(message.getContent());
+                    dishContent = getlikeDishName(userMsg);
                 }
 
                 // 回复一个菜品

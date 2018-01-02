@@ -81,6 +81,7 @@ public class WXMessageUtils extends WXUtils{
             message.setMediaId(((VoiceMessage) supperMessage).getMediaId());
             message.setFormat(((VoiceMessage) supperMessage).getFormat());
             message.setDescription(((VoiceMessage)supperMessage).getRecognition());
+            message.setRecognition(((VoiceMessage) supperMessage).getRecognition());
         }
         if(supperMessage instanceof VideoMessage){
             message.setMediaId(((VideoMessage) supperMessage).getMediaId());
