@@ -103,9 +103,10 @@
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!--配置返回jsp页面的路径的前缀和后缀,这样可以在controller中的ModelAndView中setview时少写一些代码 -->
-		<property name="prefix" value="/view/"></property>
-		<property name="suffix" value=".jsp"></property>
+		<property name="prefix" value="/views/"></property>
+		<property name="suffix" value=".html"></property>
 	</bean>
+
 
 	<!--静态文件的访问:
 	  比如jsp文件中引入的js文件,如果不加这个静态文件拦截器,会解析成请求路径,这样就会找不到对应的mapping,报404错误

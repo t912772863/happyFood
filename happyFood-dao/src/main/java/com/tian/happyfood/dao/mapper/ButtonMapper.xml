@@ -156,4 +156,13 @@
             and STATUS = #{status}
         </if>
     </select>
+
+    <select id="queryByPage" parameterType="com.tian.common.other.PageParam" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from button
+        <where>
+            <if test="params.level != '' and params.level != null">
+                and LEVEL = #{params.level}
+            </if>
+        </where>
+    </select>
 </mapper>

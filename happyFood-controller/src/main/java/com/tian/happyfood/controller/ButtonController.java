@@ -1,5 +1,6 @@
 package com.tian.happyfood.controller;
 
+import com.tian.common.other.PageParam;
 import com.tian.common.other.ResponseData;
 import com.tian.happyfood.dao.entity.Button;
 import com.tian.happyfood.service.IButtonService;
@@ -51,6 +52,13 @@ public class ButtonController extends BaseController{
     @ResponseBody
     public ResponseData deleteButtonWX(){
         return null;
+    }
+
+    @RequestMapping("queryButtonByPage")
+    @ResponseBody
+    public ResponseData queryButtonByPage(HttpServletRequest request, PageParam pageParam){
+        pageParam.getParams().put("level", request.getParameter("level"));
+        return successData.setData(buttonService.queryByPage(pageParam));
     }
 
 }

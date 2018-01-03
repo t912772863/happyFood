@@ -1,5 +1,6 @@
 package com.tian.happyfood.dao.mapper;
 
+import com.tian.common.other.PageParam;
 import com.tian.happyfood.dao.entity.Button;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,4 +33,11 @@ public interface ButtonMapper {
      */
     List<Button> queryByParentId(@Param("parentId") Long parentId, @Param("useStatus")Integer useStatus,
                                     @Param("status")Integer status);
+
+    /**
+     * 条件分页查询按钮信息
+     * @param page
+     * @return
+     */
+    List<Button> queryByPage(PageParam<Button> page);
 }

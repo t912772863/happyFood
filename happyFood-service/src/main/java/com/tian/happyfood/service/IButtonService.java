@@ -1,5 +1,6 @@
 package com.tian.happyfood.service;
 
+import com.tian.common.other.PageParam;
 import com.tian.happyfood.dao.entity.Button;
 import com.tian.happyfood.service.dto.ButtonDto;
 
@@ -40,4 +41,6 @@ public interface IButtonService {
      * 上传微信按钮
      */
     void uploadButtonOfWX() throws Exception;
+
+    List<Button> queryByPage(PageParam<Button> page);
 }

@@ -1,5 +1,6 @@
 package com.tian.happyfood.service;
 
+import com.tian.common.other.PageParam;
 import com.tian.common.util.ActivemqUtils;
 import com.tian.happyfood.dao.entity.Button;
 import com.tian.happyfood.dao.mapper.ButtonMapper;
@@ -109,4 +110,7 @@ public class ButtonServiceImpl implements IButtonService {
         return buttonDtoList;
     }
 
+    public List<Button> queryByPage(PageParam<Button> page) {
+        return buttonMapper.queryByPage(page);
+    }
 }
