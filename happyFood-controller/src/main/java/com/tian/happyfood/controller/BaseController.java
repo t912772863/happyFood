@@ -1,6 +1,9 @@
 package com.tian.happyfood.controller;
 
 import com.tian.common.other.ResponseData;
+import com.tian.happyfood.dao.entity.User;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/14 0014.
@@ -25,7 +28,7 @@ public class BaseController {
      */
     protected ResponseData failedData = new ResponseData(500,"failed");
 
-//    protected User getSessionUser(HttpServletRequest request){
-//        return (User)request.getSession(true).getAttribute("user");
-//    }
+    protected User getSessionUser(HttpServletRequest request){
+        return (User)request.getSession(true).getAttribute("user");
+    }
 }

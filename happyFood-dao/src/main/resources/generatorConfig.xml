@@ -37,8 +37,8 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         <!--表名-->  <!--实体类名-->
-        <table tableName="dish_variety" schema="louis"
-               domainObjectName="DishVariety" enableCountByExample="false"
+        <table tableName="user" schema="louis"
+               domainObjectName="User" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
         </table>

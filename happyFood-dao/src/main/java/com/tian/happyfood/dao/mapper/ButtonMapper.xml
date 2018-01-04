@@ -163,6 +163,9 @@
             <if test="params.level != '' and params.level != null">
                 and LEVEL = #{params.level}
             </if>
+            <if test="params.search != '' and params.search != null">
+                and NAME like concat ('%',#{params.search},'%')
+            </if>
         </where>
     </select>
 </mapper>

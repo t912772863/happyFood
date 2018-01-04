@@ -2,51 +2,110 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Index title</title>
+    <title>Index</title>
 
-    <link rel="stylesheet" href="../../resources/bootstrap-table/bootstrap-table.css">
     <link rel="stylesheet" href="../../resources/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resources/bootstrap-table/bootstrap-table.css">
+
+    <script src="../../resources/jquery/jquery-1.8.3.min.js"></script>
+    <script src="../../resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../../resources/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../../resources/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 
 
-    <script src="../../resources/jquery/jquery-1.8.3.min.js"/>
-    <script src="../../resources/bootstrap-3.3.7/js/bootstrap.min.js"/>
-    <script src="../../resources/bootstrap-table/bootstrap-table.min.js"/>
-    <script src="../../resources/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"/>
+
 </head>
-
-
 <body>
-<h1>aaa</h1>
-<div class="container">
-    <h1>aaa</h1>
-    <form class="form-signin">
-        aaa
-        <h2 class="form-signin-heading ele_mid">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control ele_mid" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control ele_mid" placeholder="Password" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block ele_mid but_med" onclick="fa()" id="logon">Sign in</button>
-    </form>
+<!--<embed type="text/html" src="head.html" />-->
+<!--<include file="header.html" />-->
+<!--<iframe  marginwidth="0" marginheight="0" style="margin: 0; padding: 0;" frameborder="0" scrolling="no" src="head.html" height="auto" width="100%"></iframe>-->
+<script src="../js/head.js"></script>
+<h2>Details</h2>
 
-    <input value="123" />
-    <!--通过表格 id 来启用 bootstrap table。-->
-    <table id="table"></table>
-
-</div> 
-
-
+<table id="table"></table>
+<iframe  marginwidth="0" marginheight="0" style="margin: 0; padding: 0;" frameborder="0" scrolling="no" src="foot.html" height="auto" width="100%"></iframe>
 </body>
+<script>
+    $('#table').bootstrapTable({
+        // 请求地址
+        url: '/happyFood/queryButtonByPage',
+        // 定义显示列名
+        columns: [{
+            field: 'id',
+            title: 'ID',
+        }, {
+            field: 'name',
+            title: '名称'
+        }, {
+            field: 'type',
+            title: '类型'
+        }, {
+            field:'level',
+            title: '等级'
+        },{
+            field:'orders',
+            title: '排序'
+        },{
+            field:'useStatus',
+            title: '使用状态',
+            formatter:function (value, row, index) {
+                // value表示该值,row是该条记录对象, index表示第几条记录
+                if(0==value){
+                    return "未使用";
+                }
+                if(1==value){
+                    return "使用中";
+                }
+                if(-1 == value){
+                    return "已删除";
+                }
+                return "未知";
+            }
+        },{
+            field:'createTime',
+            title: '创建时间'
+        }
+        ],
+        // 请求成功后数据处理
+        responseHandler:function (res) {
+            var o = {
+                // 如果用服务端分页逻辑, 则把记录和总记录数拼成这样一个对象
+                total:res.data.totalNumber,
+                rows:res.data.result
+            }
 
+            return o;
+        },
+        // 是否显示分页器
+        pagination:true,
+        // 设置页面分页或者服务端分页 server, client
+        sidePagination:'server',
+        // 默认显示页码
+        pageNumber:1,
+        // 每页记录数
+        pageSize:10,
+        // 可修改的每页记录数
+        pageList:[5, 10, 15, 20],
+        // 分页请求参数添加
+        queryParams: 	function(params) {
+            // 插件会基于分页逻辑传一些参数, 这里把这参参数转换成需要的格式
+            params.pageSize = params.limit;
+            params.pageNumber = (params.offset)/10+1;
+            return params;
+        },
+        queryParamsType:'limit',
+        // 是否显示行间色
+        striped: true,
+        // 当数据为 undefined 时显示的字符
+        undefinedText:'--',
+        //
+        selectItemName:'id',
+        // 是否启动搜索框
+        search:true,
+        // 设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
+        searchOnEnterKey:true
 
+    });
+
+</script>
 </html>

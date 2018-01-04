@@ -54,11 +54,15 @@ public class ButtonController extends BaseController{
         return null;
     }
 
+
     @RequestMapping("queryButtonByPage")
     @ResponseBody
     public ResponseData queryButtonByPage(HttpServletRequest request, PageParam pageParam){
         pageParam.getParams().put("level", request.getParameter("level"));
-        return successData.setData(buttonService.queryByPage(pageParam));
+        pageParam.getParams().put("search", request.getParameter("search"));
+
+        pageParam.setResult(buttonService.queryByPage(pageParam));
+        return successData.setData(pageParam);
     }
 
 }

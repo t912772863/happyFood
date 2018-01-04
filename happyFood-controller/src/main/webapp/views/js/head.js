@@ -1,0 +1,16 @@
+document.writeln("<div class=\'header\' style=\'background-image: url(http://image.youzhan.org/d/dd/2de797545de56274f03a5920eb3a1.jpg);");
+document.writeln("width:100%;height:100%\'>");
+document.writeln("    <div class=\'logoimg\'>");
+document.writeln("        <a href=\'http://www.youzhan.org\' title=\'Bootstrap 优站精选\'><img src=\'http://image.youzhan.org/e/35/22ccaf4c24ef690f7767e6a3ba5f0.png\' alt=\'Bootstrap 优站精选\' width=\'78\'></a>");
+document.writeln("    </div>");
+document.writeln("    <div class=\'container\'>");
+document.writeln("        <div class=\'row\'>");
+document.writeln("            <div class=\'col-xs-12\'>");
+document.writeln("                <div class=\'logotxt\'><h1><a href=\'http://www.youzhan.org\'>Bootstrap</a></h1></div>");
+document.writeln("                <h2 class=\'site-name text-center\'>优站精选吗<span>www.YouZhan.org</span></h2>");
+document.writeln("");
+document.writeln("            </div>");
+document.writeln("        </div>");
+document.writeln("");
+document.writeln("    </div>");
+document.writeln("</div>");
