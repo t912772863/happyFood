@@ -23,6 +23,7 @@ public class UserServiceImpl implements IUserService {
 
     public void insert(User user) {
         user.setCreateTime(new Date());
+        user.setStatus(1);
         userMapper.insert(user);
     }
 

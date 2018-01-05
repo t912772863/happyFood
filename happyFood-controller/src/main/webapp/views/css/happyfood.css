@@ -40,3 +40,17 @@ label {
 .mar_b_30{
     margin-bottom:30px;
 }
+
+.a_but{
+    height: 21px;
+    line-height: 21px;
+    padding: 0 11px;
+    background: red;
+    border: 1px #26bbdb solid;
+    border-radius: 3px;
+    /*color: #fff;*/
+    display: inline-block;
+    text-decoration: none;
+    font-size: 12px;
+    outline: none;
+}
