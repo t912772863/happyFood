@@ -26,4 +26,8 @@ public class MessageServiceImpl implements IMessageService {
         message.setStatus(1);
         messageMapper.insertSelective(message);
     }
+
+    public Message queryByMsgId(Long msgId) {
+        return messageMapper.queryByMsgId(msgId);
+    }
 }

@@ -84,6 +84,6 @@
   </select>
 
   <select id="queryAllDishName" resultType="string">
-     select NAME from dish;
+     select DISTINCT NAME from dish;
   </select>
 </mapper>

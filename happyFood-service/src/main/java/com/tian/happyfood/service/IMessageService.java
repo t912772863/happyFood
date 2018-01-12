@@ -9,4 +9,6 @@ public interface IMessageService {
     void insert(Message record);
 
     void insertSelective(Message record);
+
+    Message queryByMsgId(Long msgId);
 }

@@ -176,5 +176,7 @@
     </trim>
   </insert>
 
-
+<select id="queryByMsgId" parameterType="long" resultMap="BaseResultMap">
+  select * from message where MSG_ID = #{msgId}
+ </select>
 </mapper>

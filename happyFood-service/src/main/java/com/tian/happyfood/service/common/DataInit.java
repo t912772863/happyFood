@@ -29,9 +29,11 @@ public class DataInit {
         logger.info("====================> spring bean init over, data init start...");
         // 把配置文件初始化到Config中
         Config.init();
+        logger.info("properties init.");
 
         // 初始化redis工具类
         JedisUtil.init(redisIp, redisPort);
+        logger.info("jedis init.");
 
         // 初始化mq的消费者
         ActivemqUtils.getQueueConsumerInstance(Config.config.getString("activemq_username"),
@@ -42,6 +44,8 @@ public class DataInit {
                 Config.config.getString("activemq_password"),
                 Config.config.getString("activemq_url"),
                 Config.config.getString("activemq_destination_dish"), new JDDishListener());
+
+        logger.info("mq init.");
 
 
         // 初始化生产者

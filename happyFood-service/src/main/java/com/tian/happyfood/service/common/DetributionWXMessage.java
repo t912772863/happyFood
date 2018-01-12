@@ -63,7 +63,11 @@ public class DetributionWXMessage {
     private String executeMessage(SupperMessage supperMessage){
         Message message = new Message();
         WXMessageUtils.convertMessage(supperMessage, message);
-        messageService.insert(message);
+        // 微信平台,如果在短时间内没有收到回复, 会尝试至多三次消息重推送, 所以这里在插入之前要看看这个消息本地是否有了.
+        Message localMessage = messageService.queryByMsgId(message.getMsgId());
+        if(localMessage == null){
+            messageService.insert(message);
+        }
         // 如果是文本消息,或者语音, 则查找菜品做法,其它类型消息先不回复
         if("text".equals(supperMessage.getMsgType()) || "voice".equals(supperMessage.getMsgType())){
             // 用户发过来的消息

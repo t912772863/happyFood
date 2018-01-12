@@ -6,4 +6,6 @@ public interface MessageMapper {
     int insert(Message record);
 
     int insertSelective(Message record);
+
+    Message queryByMsgId(Long msgId);
 }
