@@ -141,7 +141,7 @@
 			<mvc:exclude-mapping path="/insert"/>
 			<mvc:exclude-mapping path="/get"/>
 			<mvc:exclude-mapping path="/index.html"/>
-			<bean class="com.tian.happyfood.controller.common.LoginHandlerInterceptor">
+			<bean class="com.tian.happyfood.controller.interceptor.LoginHandlerInterceptor">
 				<!--低版本的spring不支付exclude-mapping,所在可以通过注入值的方式,在拦截器里面处理相关的逻辑-->
 				<!--<property name="uncheckUrls">
 					<list>

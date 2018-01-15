@@ -1,4 +1,4 @@
-package com.tian.happyfood.controller.common;
+package com.tian.happyfood.controller.interceptor;
 
 import com.tian.happyfood.dao.entity.User;
 import org.springframework.web.servlet.HandlerInterceptor;
