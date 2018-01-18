@@ -40,7 +40,7 @@ $(function () {
             },
             success: function (data) {
                 if(data.code == 200){
-                    window.location.href = '/views/html/buttonList.html';
+                    window.location.href = '/views/jsp/buttonList.jsp';
                 }else{
                     alert(data.data);
                 }

@@ -22,7 +22,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             // 本次请求的完整路径,也就是浏览器地址栏中看到的.
             String s3 = request.getRequestURL().toString();
             // 重定向
-            response.sendRedirect(s3.replace(s2,"")+s+"/index.html");
+            response.sendRedirect(s3.replace(s2,"")+s+"/index.jsp");
             // 转发
 //            request.getRequestDispatcher("/index.html").forward(request,response);
         }

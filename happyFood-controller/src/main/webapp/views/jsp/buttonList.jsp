@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -5,7 +6,7 @@
     <title>Index</title>
     <link rel="stylesheet" href="../../resources/bootstrap-3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../resources/bootstrap-table/bootstrap-table.css">
-    <link href="/views/css/happyfood.css" rel="stylesheet">
+    <link href="../css/happyfood.css" rel="stylesheet">
     <script src="../../resources/jquery/jquery-2.1.1.min.js"></script>
     <script src="../../resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script src="../../resources/bootstrap-table/bootstrap-table.js"></script>
