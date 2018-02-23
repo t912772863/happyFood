@@ -1,11 +1,11 @@
 package com.tian.happyfood.service;
 
+import com.tian.common.other.BusinessException;
 import com.tian.common.other.PageParam;
-import com.tian.common.util.ActivemqUtils;
 import com.tian.happyfood.dao.entity.Button;
 import com.tian.happyfood.dao.mapper.ButtonMapper;
-import com.tian.happyfood.service.common.Config;
 import com.tian.happyfood.service.dto.ButtonDto;
+import com.tian.happyfood.service.wechatutil.WXButtonUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,17 +80,11 @@ public class ButtonServiceImpl implements IButtonService {
     }
 
     public void uploadButtonOfWX() throws Exception {
-        ActivemqUtils.Producer producer =ActivemqUtils.getQueueProducerInstance(Config.config.getString("activemq_username"),
-                Config.config.getString("activemq_password"),
-                Config.config.getString("activemq_url"),
-                Config.config.getString("activemq_destination"));
-        producer.sendText("======================");
-
-//        List<ButtonDTO> buttonDTOList = queryButtonOfWX();
-//        boolean index = WXButtonUtils.uploadButtons(buttonDTOList);
-//        if(!index){
-//            throw new BusinessException(500, "同步微信按钮失败");
-//        }
+        List<ButtonDto> buttonDtoList = queryButtonOfWX();
+        boolean index = WXButtonUtils.uploadButtons(buttonDtoList);
+        if(!index){
+            throw new BusinessException(500, "同步微信按钮失败");
+        }
     }
 
     public void deleteButtonOfWX() {
