@@ -44,7 +44,7 @@
     <div>
         <button class="btn btn-lg btn-primary btn-block ele_mid but_med" id="logon">登录</button>
     </div>
-    <a href="views/html/regist.html">没有帐号? 点我注册</a>
+    <a href="views/jsp/regist.jsp">没有帐号? 点我注册</a>
 </div> <!-- /container -->
 
 
