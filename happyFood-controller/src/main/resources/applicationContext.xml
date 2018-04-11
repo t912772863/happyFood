@@ -39,6 +39,11 @@
 		<property name="maxOpenPreparedStatements" value="5"></property>
 		<!--获取连接时最大等待时间, -1表示无限等待-->
 		<property name="maxWait" value="60"></property>
+		<!--每隔一个小时去检查一下线程池中的线程是否超时, 默认不启用, mysql服务器默认8小时无交互会断开连接,但是这里连接池还有,
+		调用就会报错-->
+		<property name="timeBetweenEvictionRunsMillis" value="3600000"/>
+		<!--和上面配置配合使用,每次检查时,如果连接空闲时间大于这个值就会被回收. 因此上面的值+这个值不大于数据自动断开空闲连接的值-->
+		<property name="minEvictableIdleTimeMillis" value="3600000"/>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
