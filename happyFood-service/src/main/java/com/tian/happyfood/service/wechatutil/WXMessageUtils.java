@@ -130,16 +130,4 @@ public class WXMessageUtils extends WXUtils{
 
     }
 
-    public static void main(String[] args) {
-        String s = "<xml><ToUserName><![CDATA[gh_707fb02e775a]]></ToUserName><FromUserName><![CDATA[oq6PS1ZViOqjZNk1vQ74LqltDsg4]]></FromUserName><CreateTime>1514356471</CreateTime><MsgType><![CDATA[voice]]></MsgType><MediaId><![CDATA[wc1cxdf23HMDagGcFSEG5Lz_Sq_54XgrEP3EUfzpTXzueExaTKRBimbpJjeGs190]]></MediaId><Format><![CDATA[amr]]></Format><MsgId>6504111517430972416</MsgId><Recognition><![CDATA[你在干嘛呢？]]></Recognition></xml>";
-        VideoMessage v = new VideoMessage();
-        try {
-            XmlUtils.paserXmlToObject(s, v);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        System.out.println(v);
-        // 1514358778  1514358836126
-        System.out.println(System.currentTimeMillis());
-    }
 }

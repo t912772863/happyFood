@@ -2,6 +2,7 @@ package com.tian.happyfood.controller;
 
 import com.tian.common.other.ResponseData;
 import com.tian.common.validation.NotNull;
+import com.tian.common.validation.Number;
 import com.tian.happyfood.service.IDishService;
 import com.tian.happyfood.service.IDishVarietyService;
 import com.tian.happyfood.service.dto.DishDto;
@@ -41,8 +42,8 @@ public class DishController extends BaseController{
      */
     @RequestMapping("queryDishByName")
     @ResponseBody
-    public ResponseData queryDishByName(@NotNull String name) throws JMSException{
-        return successData.setData(dishService.queryDetailByDishName(name));
+    public ResponseData queryDishByName(@NotNull String name, @Number(minValue = 1, maxValue = 2, nullAble = true) Integer type) throws JMSException{
+        return successData.setData(dishService.queryDetailByDishName(name, type));
     }
 
     /**

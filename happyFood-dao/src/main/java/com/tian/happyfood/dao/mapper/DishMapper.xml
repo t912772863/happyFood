@@ -11,6 +11,8 @@
     <result column="PEOPLE_NUM" property="peopleNum" jdbcType="VARCHAR" />
     <result column="CONTENT" property="content" jdbcType="VARCHAR" />
     <result column="COOKING_TIME" property="cookingTime" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" />
+    <result column="DETAIL_URL" property="detailUrl" />
   </resultMap>
 
   <insert id="insertSelective" parameterType="com.tian.happyfood.dao.entity.Dish" >
@@ -43,6 +45,12 @@
       <if test="cookingTime != null" >
         COOKING_TIME,
       </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="detailUrl != null" >
+        DETAIL_URL,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="classId != null" >
@@ -72,6 +80,12 @@
       <if test="cookingTime != null" >
         #{cookingTime,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="detailUrl != null" >
+        #{detailUrl},
+      </if>
     </trim>
   </insert>
 
@@ -79,11 +93,19 @@
      select * from dish where ID = #{id}
   </select>
 
-  <select id="queryByName" resultMap="BaseResultMap">
-     select * from dish where NAME = #{name}
+  <select id="queryByNameAndType" resultMap="BaseResultMap">
+     select * from dish
+     <where>
+       <if test="name != null and name !=''">
+         and NAME = #{name}
+       </if>
+       <if test="type != null">
+         and TYPE = #{type}
+       </if>
+     </where>
   </select>
 
-  <select id="queryAllDishName" resultType="string">
-     select DISTINCT NAME from dish;
+  <select id="queryAllDishNameByType" resultType="string">
+     select DISTINCT NAME from dish where TYPE = #{type};
   </select>
 </mapper>

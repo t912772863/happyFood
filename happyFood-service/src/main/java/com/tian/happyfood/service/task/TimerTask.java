@@ -3,6 +3,7 @@ package com.tian.happyfood.service.task;
 import com.tian.happyfood.service.IDishService;
 import com.tian.happyfood.service.common.SystemCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,8 @@ import java.util.Set;
 public class TimerTask {
     @Autowired
     private IDishService dishService;
+    @Value("${dish_version}")
+    private int dishVersion;
 
     @PostConstruct
     private void init(){
@@ -31,7 +34,7 @@ public class TimerTask {
      */
     @Scheduled(cron = "0 0/30 * * * ?")
     public void testTimerTask(){
-        Set<String> set = dishService.queryDishName();
+        Set<String> set = dishService.queryDishNameByType(dishVersion);
         SystemCache.dishNameSet = set;
     }
 

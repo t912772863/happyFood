@@ -34,13 +34,20 @@ public class DishServiceImpl implements IDishService {
     @Autowired
     private IDishMaterialService dishMaterialService;
 
-    private static ActivemqUtils.Producer producer;
+    /** 东东万象的消息队列*/
+    private static ActivemqUtils.Producer jdProducer;
+    /** 网页版本的消息队列*/
+    private static ActivemqUtils.Producer webProducer;
 
     public static void init() throws JMSException {
-        producer =  ActivemqUtils.getQueueProducerInstance(Config.config.getString("activemq_username"),
+        jdProducer =  ActivemqUtils.getQueueProducerInstance(Config.config.getString("activemq_username"),
                 Config.config.getString("activemq_password"),
                 Config.config.getString("activemq_url"),
                 Config.config.getString("activemq_destination_dish"));
+        webProducer=  ActivemqUtils.getQueueProducerInstance(Config.config.getString("activemq_username"),
+                Config.config.getString("activemq_password"),
+                Config.config.getString("activemq_url"),
+                Config.config.getString("activemq_destination_web_dish"));
     }
 
     public void insert(Dish dish) {
@@ -122,11 +129,11 @@ public class DishServiceImpl implements IDishService {
         return dishDto;
     }
 
-    public List<DishDto> queryDetailByDishName(String dishName) throws JMSException {
-        List<Dish> dishList = dishMapper.queryByName(dishName);
+    public List<DishDto> queryDetailByDishName(String dishName, Integer type) throws JMSException {
+        List<Dish> dishList = dishMapper.queryByNameAndType(dishName, type);
         if(dishList == null || dishList.size() == 0){
             // 如果在本地查不到该菜品,则去京东万象上去同步类似菜品
-            producer.sendText(dishName);
+            jdProducer.sendText(dishName);
             return null;
         }
         List<DishDto> dishDtoList = new ArrayList<DishDto>();
@@ -144,8 +151,18 @@ public class DishServiceImpl implements IDishService {
         return dishDtoList;
     }
 
-    public Set<String> queryDishName() {
-        return dishMapper.queryAllDishName();
+    public Set<String> queryDishNameByType(Integer type) {
+        return dishMapper.queryAllDishNameByType(type);
+    }
+
+    public List<Dish> queryByDishName(String dishName, Integer type) throws JMSException {
+        List<Dish> dishList = dishMapper.queryByNameAndType(dishName, type);
+        if(dishList.size() == 0){
+            // 没有菜品, 则去爬一个,存下来
+            webProducer.sendText(dishName);
+        }
+
+        return dishList;
     }
 
     private static String filterXml(String s){

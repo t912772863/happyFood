@@ -6,11 +6,20 @@ import java.util.List;
  * Created by Administrator on 2017/12/21 0021.
  */
 public class NewsResponse extends WXResponseData{
-    private String ArticleCount;
+    /**
+     * 消息的数量, 微信一次可以回复多个消息
+     * 大多数情况下只有一个消息, 给个默认值, 需要的话再修改
+     * */
+    private String ArticleCount = "1";
+    /** 具体每个消息*/
     private List<item> Articles;
+    /** 标题*/
     private String Title;
+    /** 消息的主题描述*/
     private String Description;
+    /** 消息中大图的链接*/
     private String PicUrl;
+    /** 点击后跳的链接*/
     private String Url;
 
     public String getArticleCount() {

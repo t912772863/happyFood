@@ -1,11 +1,9 @@
 package com.tian.happyfood.service.common;
 
 import com.tian.common.util.ActivemqUtils;
-import com.tian.common.util.JedisUtil;
 import com.tian.happyfood.service.DishServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,10 +17,10 @@ import javax.jms.JMSException;
 public class DataInit {
     private static final Logger logger = LoggerFactory.getLogger(DataInit.class);
 
-    @Value("${redis_ip}")
-    private String redisIp;
-    @Value("${redis_port}")
-    private int redisPort;
+//    @Value("${redis_ip}")
+//    private String redisIp;
+//    @Value("${redis_port}")
+//    private int redisPort;
 
     @PostConstruct
     public void init() throws JMSException {
@@ -32,7 +30,7 @@ public class DataInit {
         logger.info("properties init.");
 
         // 初始化redis工具类
-        JedisUtil.init(redisIp, redisPort);
+//        JedisUtil.init(redisIp, redisPort);
         logger.info("jedis init.");
 
         // 初始化mq的消费者
@@ -44,6 +42,10 @@ public class DataInit {
                 Config.config.getString("activemq_password"),
                 Config.config.getString("activemq_url"),
                 Config.config.getString("activemq_destination_dish"), new JDDishListener());
+        ActivemqUtils.getQueueConsumerInstance(Config.config.getString("activemq_username"),
+                Config.config.getString("activemq_password"),
+                Config.config.getString("activemq_url"),
+                Config.config.getString("activemq_destination_web_dish"), new WebDishListener());
 
         logger.info("mq init.");
 

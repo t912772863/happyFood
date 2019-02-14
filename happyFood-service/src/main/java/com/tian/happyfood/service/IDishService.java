@@ -24,7 +24,9 @@ public interface IDishService {
 
     DishDto queryDetailById(String id);
 
-    List<DishDto> queryDetailByDishName(String dishName) throws JMSException;
+    List<DishDto> queryDetailByDishName(String dishName, Integer type) throws JMSException;
 
-    Set<String> queryDishName();
+    List<Dish> queryByDishName(String dishName, Integer type) throws JMSException;
+
+    Set<String> queryDishNameByType(Integer type);
 }

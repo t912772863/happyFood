@@ -19,6 +19,10 @@ public class Dish {
 
     private String cookingTime;
 
+    private Integer Type;
+
+    private String detailUrl;
+
     public String getClassId() {
         return classId;
     }
@@ -89,5 +93,38 @@ public class Dish {
 
     public void setCookingTime(String cookingTime) {
         this.cookingTime = cookingTime == null ? null : cookingTime.trim();
+    }
+
+    public Integer getType() {
+        return Type;
+    }
+
+    public void setType(Integer type) {
+        Type = type;
+    }
+
+    public String getDetailUrl() {
+        return detailUrl;
+    }
+
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "classId='" + classId + '\'' +
+                ", prepareTime='" + prepareTime + '\'' +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", pic='" + pic + '\'' +
+                ", tag='" + tag + '\'' +
+                ", peopleNum='" + peopleNum + '\'' +
+                ", content='" + content + '\'' +
+                ", cookingTime='" + cookingTime + '\'' +
+                ", Type=" + Type +
+                ", detailUrl='" + detailUrl + '\'' +
+                '}';
     }
 }

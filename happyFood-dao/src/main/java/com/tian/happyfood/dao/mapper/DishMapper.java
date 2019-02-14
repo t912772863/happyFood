@@ -11,7 +11,18 @@ public interface DishMapper {
 
     Dish queryById(@Param("id") String id);
 
-    List<Dish> queryByName(@Param("name") String name);
+    /**
+     * 根据菜名和类型查询
+     * @param name
+     * @param type
+     * @return
+     */
+    List<Dish> queryByNameAndType(@Param("name") String name, @Param("type") Integer type);
 
-    Set<String> queryAllDishName();
+    /**
+     * 查询某个类型所有不重复的菜名
+     * @param type
+     * @return
+     */
+    Set<String> queryAllDishNameByType(@Param("type") Integer type);
 }
