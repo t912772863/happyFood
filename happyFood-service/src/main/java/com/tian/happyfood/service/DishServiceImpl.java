@@ -79,6 +79,7 @@ public class DishServiceImpl implements IDishService {
             d.setId(j.getId());
             d.setPrepareTime(j.getPreparetime());
             d.setTag(j.getTag());
+            d.setType(1);
             insert(d);
             // 入库材料
             List<JDDishMaterial> materials = j.getMaterial();
