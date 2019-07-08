@@ -1,5 +1,8 @@
 package com.tian;
 
+import com.alibaba.fastjson.JSONObject;
+import com.tian.happyfood.dao.entity.Dish;
+import com.tian.happyfood.service.IDishService;
 import com.tian.happyfood.service.message.JDMessageCreator;
 import com.tian.happyfood.service.message.WebMessageCreator;
 import org.junit.Test;
@@ -18,11 +21,20 @@ public class HappyFoodTest {
     private WebMessageCreator webMessageCreator;
     @Autowired
     private JDMessageCreator jdMessageCreator;
+    @Autowired
+    private IDishService dishService;
 
     @Test
     public void test1(){
         String s = JDMessageCreator.getLikeDishName("清蒸鲈鱼");
         System.out.println(s);
+    }
+
+    @Test
+    public void testGetDish(){
+        String id = "103";
+        Dish dish = dishService.queryById(id);
+        System.out.println(JSONObject.toJSONString(dish));
     }
 
 }

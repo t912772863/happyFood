@@ -1,5 +1,6 @@
 package com.tian.happyfood.dao.mapper;
 
+import com.tian.common.other.PageParam;
 import com.tian.happyfood.dao.entity.Dish;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +26,11 @@ public interface DishMapper {
      * @return
      */
     Set<String> queryAllDishNameByType(@Param("type") Integer type);
+
+    /**
+     * 分页查询
+     * @param pageParam
+     * @return
+     */
+    List<Dish> queryByPage(PageParam pageParam);
 }

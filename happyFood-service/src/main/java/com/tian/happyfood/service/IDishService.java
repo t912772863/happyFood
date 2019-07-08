@@ -1,5 +1,6 @@
 package com.tian.happyfood.service;
 
+import com.tian.common.other.PageParam;
 import com.tian.happyfood.dao.entity.Dish;
 import com.tian.happyfood.service.dto.DishDto;
 import com.tian.happyfood.service.jingdongutil.bean.JDDish;
@@ -29,4 +30,6 @@ public interface IDishService {
     List<Dish> queryByDishName(String dishName, Integer type) throws JMSException;
 
     Set<String> queryDishNameByType(Integer type);
+
+    PageParam<Dish> queryByPage(PageParam<Dish> pageParam);
 }

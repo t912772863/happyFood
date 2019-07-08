@@ -8,9 +8,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,17 +35,5 @@ public class TimerTask {
         SystemCache.dishNameSet = set;
     }
 
-    public static void main(String[] args) {
-        List<String> list = new ArrayList<String>();
-        list.add("a");
-        list.add("b");
-        list.add("a");
-        System.out.println(list.toString());
 
-        Set<String> set = new HashSet<String>();
-        set.add("a");
-        set.add("b");
-        set.add("a");
-        System.out.println(set.toString());
-    }
 }

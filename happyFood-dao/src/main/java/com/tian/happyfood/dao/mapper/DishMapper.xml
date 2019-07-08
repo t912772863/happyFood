@@ -108,4 +108,8 @@
   <select id="queryAllDishNameByType" resultType="string">
      select DISTINCT NAME from dish where TYPE = #{type};
   </select>
+
+  <select id="queryByPage" parameterType="com.tian.common.other.PageParam" resultMap="BaseResultMap">
+    select * from dish
+  </select>
 </mapper>

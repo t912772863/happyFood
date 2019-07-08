@@ -1,5 +1,6 @@
 package com.tian.happyfood.service;
 
+import com.tian.common.other.PageParam;
 import com.tian.common.util.ActivemqUtils;
 import com.tian.happyfood.dao.entity.Dish;
 import com.tian.happyfood.dao.entity.DishMaterial;
@@ -164,6 +165,12 @@ public class DishServiceImpl implements IDishService {
         }
 
         return dishList;
+    }
+
+    public PageParam<Dish> queryByPage(PageParam<Dish> pageParam) {
+        List<Dish> list = dishMapper.queryByPage(pageParam);
+        pageParam.setResult(list);
+        return pageParam;
     }
 
     private static String filterXml(String s){
