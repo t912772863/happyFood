@@ -228,5 +228,12 @@ public class DishController extends BaseController{
         return success;
     }
 
+    @RequestMapping("testGetAll")
+    @ResponseBody
+    public ResponseData testGetAll(){
+        baseESSearcher.queryAll("happy_food");
+        return success;
+    }
+
 
 }

@@ -14,6 +14,7 @@ import org.elasticsearch.action.get.MultiGetRequestBuilder;
 import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -21,7 +22,15 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.metrics.*;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,6 +233,201 @@ public class BaseESSearcher {
             item.status();
         }
         // 需要的话可以返回结果,失败的还可以返回失败原因
+    }
+
+    /**
+     * 删除符合查询条件的记录
+     */
+    public void deleteByQuery(){
+//        BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newResponse().fi
+    }
+
+    /**
+     * 查询所有
+     * @param index
+     */
+    public void queryAll(String index){
+        QueryBuilder builder = new MatchAllQueryBuilder();
+        // 这里的setSize可以设置一次查询多少, 默认是10条
+        SearchResponse sr = client.prepareSearch(index).setQuery(builder).setSize(3).get();
+
+        SearchHits hits = sr.getHits();
+        for(SearchHit hit: hits){
+            // 文档内容
+            System.out.println(hit.getSourceAsString());
+            // 也可以转成map
+            for(Map.Entry<String, Object> entry: hit.getSourceAsMap().entrySet()){
+                System.out.println("K: "+entry.getKey()+"V: "+entry.getValue());
+            }
+        }
+
+    }
+
+    /**
+     * 条件查询. 一个值匹配多个字段
+     * 可以匹配一个字段, 或者多个字段
+     */
+    public void mathchQuery(String index, String text, String ... filedNames){
+        QueryBuilder builder = QueryBuilders.multiMatchQuery(text, filedNames);
+        SearchResponse sr = client.prepareSearch(index).setQuery(builder).setSize(3).get();
+        SearchHits hits = sr.getHits();
+        for(SearchHit hit: hits){
+            // 文档内容
+            System.out.println(hit.getSourceAsString());
+            // 也可以转成map
+            for(Map.Entry<String, Object> entry: hit.getSourceAsMap().entrySet()){
+                System.out.println("K: "+entry.getKey()+"V: "+entry.getValue());
+            }
+        }
+
+    }
+
+    /**
+     * 一个字段匹配多个值
+     * @param index
+     * @param filedName
+     * @param values
+     */
+    public void termsQuery(String index, String filedName, Object ... values){
+        QueryBuilder builder = QueryBuilders.termsQuery(filedName, values);
+        SearchResponse sr = client.prepareSearch(index).setQuery(builder).setSize(3).get();
+        SearchHits hits = sr.getHits();
+        for(SearchHit hit: hits){
+            // 文档内容
+            System.out.println(hit.getSourceAsString());
+            // 也可以转成map
+            for(Map.Entry<String, Object> entry: hit.getSourceAsMap().entrySet()){
+                System.out.println("K: "+entry.getKey()+"V: "+entry.getValue());
+            }
+        }
+
+
+    }
+
+    /**
+     * 范围查询
+     * @param type
+     * @param start
+     * @param end
+     */
+    public void rangeQuery(String type, Object start, Object end){
+        QueryBuilder builder = QueryBuilders.rangeQuery(type).from(start).to(end);
+        SearchResponse sr = client.prepareSearch(type).setQuery(builder).setSize(3).get();
+        SearchHits hits = sr.getHits();
+        for(SearchHit hit: hits){
+            // 文档内容
+            System.out.println(hit.getSourceAsString());
+            // 也可以转成map
+            for(Map.Entry<String, Object> entry: hit.getSourceAsMap().entrySet()){
+                System.out.println("K: "+entry.getKey()+"V: "+entry.getValue());
+            }
+        }
+
+    }
+
+    /**
+     * 前缀查询
+     */
+    public void prifixQuery(){
+        QueryBuilder builder = QueryBuilders.prefixQuery("filedNmae","prefix");
+    }
+
+    /**
+     * 类似于正则查询
+     */
+    public void wildcardQuery(){
+        QueryBuilder builder = QueryBuilders.wildcardQuery("name","tian*");
+
+    }
+
+    /**
+     * 相似查询
+     */
+    public void fuzzyQuery(){
+        QueryBuilder builder = QueryBuilders.fuzzyQuery("name", "tianxoing");
+    }
+
+    /**
+     * 类型查询
+     */
+    public void typeQuery(){
+        QueryBuilder builder = QueryBuilders.typeQuery("type");
+    }
+
+    /**
+     * 一次查询多个id
+     */
+    public void idQuery(){
+        QueryBuilder builder = QueryBuilders.idsQuery().addIds("1","2");
+    }
+
+    /**
+     * 求某个字段最大值
+     */
+    public void max(){
+        AggregationBuilder agg = AggregationBuilders.max("aggMax").field("age");
+        SearchResponse response = client.prepareSearch("lib3").addAggregation(agg).get();
+        // 最大
+        Max max = response.getAggregations().get("aggMax");
+        System.out.println(max.getValue());
+
+    }
+
+    /**
+     * 最小值
+     */
+    public void min(){
+        AggregationBuilder agg = AggregationBuilders.min("aggMin").field("age");
+        SearchResponse response = client.prepareSearch("lib3").addAggregation(agg).get();
+        // 最大
+        Min min = response.getAggregations().get("aggMin");
+        System.out.println(min.getValue());
+
+    }
+
+    /**
+     * 平均值
+     */
+    public void avg(){
+        AggregationBuilder agg = AggregationBuilders.avg("aggAvg").field("age");
+        SearchResponse response = client.prepareSearch("lib3").addAggregation(agg).get();
+        // 最大
+        Avg avg = response.getAggregations().get("aggAvg");
+        System.out.println(avg.getValue());
+
+    }
+
+    /**
+     * 求和
+     */
+    public void sum(){
+        AggregationBuilder agg = AggregationBuilders.sum("aggSum").field("age");
+        SearchResponse response = client.prepareSearch("lib3").addAggregation(agg).get();
+        // 最大
+        Sum sum = response.getAggregations().get("aggSum");
+        System.out.println(sum.getValue());
+
+    }
+
+    public void distinct(){
+        AggregationBuilder agg = AggregationBuilders.cardinality("aggCardinality").field("age");
+        SearchResponse response = client.prepareSearch("lib3").addAggregation(agg).get();
+        // 最大
+        Cardinality cardinality = response.getAggregations().get("aggCardinality");
+        // 返回的是互不相同的值的个数
+        System.out.println(cardinality.getValue());
+
+    }
+
+    /**
+     * 组合查询
+     */
+    public void boolQuery(){
+        QueryBuilder builder = QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name","tianxiong"))
+                                    .mustNot(QueryBuilders.matchQuery("sex","m"))
+                                    .should(QueryBuilders.matchQuery("address","hubei"))
+                                    .filter(QueryBuilders.rangeQuery("age").gte(18));
+
     }
 
 }
